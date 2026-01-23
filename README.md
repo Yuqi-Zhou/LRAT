@@ -1,30 +1,39 @@
 # Learning to Retrieve for Agentic Search (SIGIR 2026 Submission)
 
-This repository contains our implementation for the SIGIR 2026 submission on **Learning to Retrieve**, **Agentic Search**, and **Agent Trajectory** analysis/training. It includes:
-- Trajectory construction with different retrievers (BM25 / dense)
-- Training data construction from trajectories
-- Retriever fine-tuning (based on FlagEmbedding)
-- Evaluation pipelines on standard benchmarks
+> **SIGIR 2026 Submission** | Learning to Retrieve, Agentic Search & Agent Trajectory Analysis
 
 ---
 
-## Repository Layout (What We Provide)
+## 📚 Navigation
+
+| Section | Description |
+|---------|-------------|
+| [Repository Layout](#repository-layout) | Overview of trajectory data, training data, evaluation datasets, and prompts |
+| [Dataset Preparation](#dataset-preparation) | Instructions for corpus download & preprocessing |
+| [Model List](#model-list) | Available retrievers & agents |
+| [Environment Setup](#0-environment-setup) | Python, Java, and dependencies installation |
+| [Index Construction](#1-index-construction) | Creating indexes for retrieval |
+| [Trajectory Construction](#2-trajectory-construction) | Generating agent trajectories |
+| [Training Data Construction](#3-training-data-construction-from-trajectories) | Building retriever training datasets |
+| [Retriever Training](#4-retriever-training) | Fine-tuning the retriever |
+| [Evaluation](#5-evaluation) | Evaluating trajectories and retrieval performance |
+| [Acknowledgements](#acknowledgements) | Credits for datasets, repositories, and tools |
+
+---
+
+## Repository Layout
 
 ### Trajectory Data
-- Example trajectories are provided under:
-  - `trajectory/bm25/`
+- Example trajectories are available under: `trajectory/bm25/`  
 
 ### Training Data
-- A small example training set is provided at:
-  - `FlagEmbedding-master/examples/finetune/embedder/example_data/sample_data.jsonl`
+- Sample training set: `FlagEmbedding-master/examples/finetune/embedder/example_data/sample_data.jsonl`  
 
 ### Evaluation Data
-- We place evaluation datasets under:
-  - `datasets/`
-  - including **Browsecomp-Plus** and **InfoSeek-Eval**
+- Evaluation datasets: `datasets/` (includes **BrowseComp-Plus** and **InfoSeek-Eval**)  
 
 ### Prompts
-- Prompts for each pipeline stage are located in their corresponding folders.
+- Prompts for each pipeline stage are located in their respective folders.
 
 ---
 
@@ -32,16 +41,15 @@ This repository contains our implementation for the SIGIR 2026 submission on **L
 
 ### Corpus Preparation
 
-We follow prior work and use two corpora:
+1️⃣ **BrowseComp-Plus Corpus (Tevatron)**
 
-1) **Browsecomp-Plus Corpus** (Tevatron)
 ```python
 from datasets import load_dataset
 ds = load_dataset("Tevatron/browsecomp-plus-corpus", split="train")
-```
+````
 
-2) **Wiki-25-512 Corpus** (InfoSeek / wikidump-25)
-- Hugging Face: https://huggingface.co/datasets/Lk123/wiki-25-512
+2️⃣ **Wiki-25-512 Corpus (InfoSeek / wikidump-25)**
+
 ```python
 from datasets import load_dataset
 ds = load_dataset("Lk123/wiki-25-512")
@@ -51,50 +59,47 @@ ds = load_dataset("Lk123/wiki-25-512")
 
 ## Model List
 
-### Retriever (Embedding Model) HF IDs
-- `intfloat/multilingual-e5-large-instruct`
-- `Qwen3/Qwen3-Embedding-0.6b`
-- `Qwen3/Qwen3-Embedding-4b`
-- `Qwen3/Qwen3-Embedding-8b`
+### Retriever (Embedding Models)
 
-### Agent / LLM HF IDs
-- `openbmb/AgentCPM-Explore`
-- `hkust-nlp/WebExplorer-8B`
-- `Alibaba-NLP/Tongyi-DeepResearch-30B-A3B`
-- `openai/gpt-oss-120b`
+* `intfloat/multilingual-e5-large-instruct`
+* `Qwen3/Qwen3-Embedding-0.6b`
+* `Qwen3/Qwen3-Embedding-4b`
+* `Qwen3/Qwen3-Embedding-8b`
+
+### Agent / LLM
+
+* `openbmb/AgentCPM-Explore`
+* `hkust-nlp/WebExplorer-8B`
+* `Alibaba-NLP/Tongyi-DeepResearch-30B-A3B`
+* `openai/gpt-oss-120b`
 
 ---
 
 ## 0. Environment Setup
 
-We use `uv` with Python 3.10 to manage the environment.
-
-Install `uv`:
 ```bash
+# Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
-```
 
-Then:
-```bash
+# Sync environment and activate
 uv sync
 source .venv/bin/activate
+
+# Install dependencies
 uv pip install --no-build-isolation flash-attn
 ```
 
 ### Java 21 Dependency
-This repo depends on Java 21. Install via conda:
+
 ```bash
 conda install -c conda-forge openjdk=21
-```
-
-Or via apt (requires sudo):
-```bash
+# or via apt
 sudo apt update
 sudo apt install -y openjdk-21-jdk
 ```
 
-### Install the Modified FlagEmbedding
-You must install our modified FlagEmbedding:
+### Install Modified FlagEmbedding
+
 ```bash
 cd FlagEmbedding
 pip install -e .
@@ -102,67 +107,54 @@ pip install -e .
 
 ---
 
-## Index Construction
+## 1. Index Construction
 
-Please follow:
-- `docs/index.md`
-
----
-
-## 1. Trajectory Construction
-
-To generate agent trajectories, see:
-- `docs/trajectory_construction.md`
+* Guide: `docs/index.md`
 
 ---
 
-## 2. Training Data Construction (from Trajectories)
+## 2. Trajectory Construction
 
-After trajectories are generated, build retriever training data by following:
-- `docs/training_data_construction.md`
-
-### Why We Use InfoSeekQA for Trajectory Construction
-
-A core requirement of trajectory analysis is that the underlying tasks **truly require multi-step information seeking**. However, many widely used open-domain QA datasets do not satisfy this requirement in practice.
-
-Single-hop datasets such as **Natural Questions (NQ)** and **TriviaQA**, as well as commonly adopted multi-hop benchmarks like **HotpotQA**, **2WikiMultihopQA**, and **MuSiQue**, often permit shallow retrieval strategies. Prior work has shown that agents trained on these datasets perform **fewer than three retrieval calls per query on average**, indicating limited multi-step interaction and weak browsing behavior.
-
-To better reflect realistic multi-step information-seeking trajectories, we construct our trajectories using **InfoSeekQA**, which is specifically designed to require iterative search and browsing across multiple sources.
-
-The InfoSeekQA dataset is publicly available at:
-[https://huggingface.co/datasets/Lk123/InfoSeek](https://huggingface.co/datasets/Lk123/InfoSeek)
+* Guide: `docs/trajectory_construction.md`
 
 ---
 
-### Dataset Preprocessing
+## 3. Training Data Construction (from Trajectories)
 
-After downloading the InfoSeekQA dataset, we further preprocess it into a **TSV format** to ensure compatibility with our data pipeline.
-The generated TSV files follow the same schema as:
+* Guide: `docs/training_data_construction.md`
 
-* `browsecomp-plus.tsv`
-* `InfoSeek-E
+### Why InfoSeekQA?
 
----
+* Multi-step information-seeking tasks are essential.
+* Other benchmarks (NQ, TriviaQA, HotpotQA, etc.) allow shallow retrieval (<3 calls/query).
+* **InfoSeekQA** enforces iterative search and browsing for richer trajectories.
 
-## 3. Retriever Training
-
-The training script is provided here:
-- `FlagEmbedding-master/examples/finetune/embedder/run.sh`
-
-Run it directly after preparing the training data.
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-Lk123-purple?logo=huggingface)](https://huggingface.co/datasets/Lk123/InfoSeek)
 
 ---
 
-## 4. Evaluation
+## 4. Retriever Training
 
-To evaluate final trajectory results, see:
-- `docs/evaluate.md`
+* Script: `FlagEmbedding-master/examples/finetune/embedder/run.sh`
+
+> Run after preparing training data.
+
+---
+
+## 5. Evaluation
+
+* Guide: `docs/evaluate.md`
 
 ---
 
 ## Acknowledgements
 
-We thank the following repositories for their implementations and contributions:
-- BrowseComp-Plus: https://github.com/texttron/BrowseComp-Plus  
-- FlagEmbedding: https://github.com/FlagOpen/FlagEmbedding
->>>>>>> 987323e (Initial commit)
+We gratefully acknowledge the following repositories and datasets:
+
+| Repository                | Maintainer | Link                                                                                                                                     |
+| ------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 🌐 **BrowseComp-Plus**    | Texttron   | [![GitHub](https://img.shields.io/badge/GitHub-Texttron-blue?logo=github)](https://github.com/texttron/BrowseComp-Plus)                  |
+| ⚡ **FlagEmbedding**       | FlagOpen   | [![GitHub](https://img.shields.io/badge/GitHub-FlagOpen-orange?logo=github)](https://github.com/FlagOpen/FlagEmbedding)                  |
+| 📚 **InfoSeekQA Dataset** | Lk123      | [![HuggingFace](https://img.shields.io/badge/HuggingFace-Lk123-purple?logo=huggingface)](https://huggingface.co/datasets/Lk123/InfoSeek) |
+
+> These repositories and datasets provided the foundation for trajectory construction, retriever training, and evaluation pipelines in our SIGIR 2026 submission. We sincerely thank all maintainers for making their resources publicly available.
