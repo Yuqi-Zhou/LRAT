@@ -133,7 +133,7 @@ pip install -e .
 
 ## 4. Retriever Training
 
-* Script: `FlagEmbedding-master/examples/finetune/embedder/run.sh`
+* Script: `FlagEmbedding/examples/finetune/embedder/run.sh`
 
 > Run after preparing training data.
 
