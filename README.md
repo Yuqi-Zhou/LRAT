@@ -25,7 +25,7 @@
 - Example trajectories are available under: `trajectory/bm25/`  
 
 ### Training Data
-- Sample training set: `FlagEmbedding-master/examples/finetune/embedder/example_data/sample_data.jsonl`  
+- Sample training set: `FlagEmbedding/examples/finetune/embedder/example_data/sample_data.jsonl`  
 
 ### Evaluation Data
 - Evaluation datasets: `datasets/` (includes **BrowseComp-Plus** and **InfoSeek-Eval**)  
