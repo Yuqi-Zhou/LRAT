@@ -1,6 +1,4 @@
-# Learning to Retrieve for Agentic Search (SIGIR 2026 Submission)
-
-> **SIGIR 2026 Submission** | Learning to Retrieve, Agentic Search & Agent Trajectory Analysis
+# Learning to Retrieve from Agent Trajectories (SIGIR 2026 Submission)
 
 ---
 
