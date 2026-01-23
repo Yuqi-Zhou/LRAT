@@ -28,7 +28,7 @@ This repository contains our implementation for the SIGIR 2026 submission on **L
 
 ---
 
-## Dataset Preparation
+## -1. Dataset Preparation
 
 ### Corpus Preparation
 
@@ -121,26 +121,8 @@ To generate agent trajectories, see:
 After trajectories are generated, build retriever training data by following:
 - `docs/training_data_construction.md`
 
-### Why We Use InfoSeekQA for Trajectory Construction
-
-A core requirement of trajectory analysis is that the underlying tasks **truly require multi-step information seeking**. However, many widely used open-domain QA datasets do not satisfy this requirement in practice.
-
-Single-hop datasets such as **Natural Questions (NQ)** and **TriviaQA**, as well as commonly adopted multi-hop benchmarks like **HotpotQA**, **2WikiMultihopQA**, and **MuSiQue**, often permit shallow retrieval strategies. Prior work has shown that agents trained on these datasets perform **fewer than three retrieval calls per query on average**, indicating limited multi-step interaction and weak browsing behavior.
-
-To better reflect realistic multi-step information-seeking trajectories, we construct our trajectories using **InfoSeekQA**, which is specifically designed to require iterative search and browsing across multiple sources.
-
-The InfoSeekQA dataset is publicly available at:
-[https://huggingface.co/datasets/Lk123/InfoSeek](https://huggingface.co/datasets/Lk123/InfoSeek)
-
----
-
-### Dataset Preprocessing
-
-After downloading the InfoSeekQA dataset, we further preprocess it into a **TSV format** to ensure compatibility with our data pipeline.
-The generated TSV files follow the same schema as:
-
-* `browsecomp-plus.tsv`
-* `InfoSeek-E
+### Why We Use InfoSeekQA for Trajectories
+A core requirement for trajectory analysis is that the underlying tasks genuinely demand multi-step information seeking. Many existing open-domain QA datasets do not meet this requirement in practice. Single-hop datasets such as NQ and TriviaQA, and even commonly used multi-hop datasets such as HotpotQA, 2WikiMultihopQA, and MuSiQue, often allow shallow retrieval strategies. Prior work shows that agents trained on these datasets make fewer than three retrieval calls per task on average, indicating limited multi-step interaction. Therefore, our trajectories are built from **InfoSeekQA** to better reflect multi-step browsing behavior.
 
 ---
 
@@ -165,4 +147,3 @@ To evaluate final trajectory results, see:
 We thank the following repositories for their implementations and contributions:
 - BrowseComp-Plus: https://github.com/texttron/BrowseComp-Plus  
 - FlagEmbedding: https://github.com/FlagOpen/FlagEmbedding
->>>>>>> 987323e (Initial commit)

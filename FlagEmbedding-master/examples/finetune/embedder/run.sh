@@ -1,0 +1,35 @@
+torchrun --nproc_per_node 8 --master_port=2026 \
+    -m FlagEmbedding.finetune.embedder.decoder_only.base \
+    --model_name_or_path Qwen3/Qwen3-Embedding-0.6B \
+    --cache_dir /root/cache/model \
+    --train_data sample_data.jsonl \
+    --cache_path /root/cache/data \
+    --train_group_size 10 \
+    --query_max_len 512 \
+    --passage_max_len 512 \
+    --pad_to_multiple_of 8 \
+    --query_instruction_for_retrieval 'Given a web search query, retrieve relevant passages that answer the query' \
+    --query_instruction_format 'Instruct: {}\nQuery:{}' \
+    --knowledge_distillation False \
+    --same_dataset_within_batch True \
+    --small_threshold 0 \
+    --drop_threshold 0 \
+    --output_dir training_model \
+    --overwrite_output_dir \
+    --learning_rate 1e-6 \
+    --bf16 \
+    --num_train_epochs 2 \
+    --save_strategy epoch \
+    --per_device_train_batch_size 32 \
+    --dataloader_drop_last True \
+    --warmup_ratio 0.1 \
+    --gradient_checkpointing \
+    --deepspeed ../ds_stage0.json \
+    --logging_steps 1 \
+    --save_steps 500 \
+    --negatives_cross_device \
+    --temperature 0.02 \
+    --sentence_pooling_method last_token \
+    --normalize_embeddings True \
+    --kd_loss_type m3_kd_loss
+
