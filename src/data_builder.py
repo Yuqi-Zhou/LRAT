@@ -19,7 +19,7 @@ python build_pairs.py \
   --traj-dir /root/runs/wiki-25/tongyi/true_false/qwen3-0.6b_topk10_true \
   --output-path /root/training_data/tongyi/qwen3-0.6b/v3.jsonl \
   --tokenizer-path /root/PLM/Qwen3-Embedding-0.6B \
-  --judge-api-url http://33.212.69.4:8000/v1/chat/completions \
+  --judge-api-url http://xx.xxx.xx.x:xxxx/v1/chat/completions \
   --judge-model auto \
   --max-workers 32 \
   --future-timeout 15
