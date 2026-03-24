@@ -3,27 +3,18 @@
 # Learning to Retrieve from Agent Trajectories
 ### LRAT
 
-<p><strong>Training retrieval models from long-horizon agent search trajectories for deep information-seeking tasks.</strong></p>
-
 <p>
-  <img src="https://img.shields.io/badge/Task-Agent%20Trajectory%20Learning-0F766E?style=for-the-badge" alt="Task">
-  <img src="https://img.shields.io/badge/Retrieval-BM25%20%7C%20FAISS%20%7C%20ReasonIR-1D4ED8?style=for-the-badge" alt="Retrieval">
   <img src="https://img.shields.io/badge/Benchmarks-BrowseComp--Plus%20%7C%20InfoSeek--Eval-7C3AED?style=for-the-badge" alt="Benchmarks">
 </p>
 
 <p>
-  <a href="#resources"><img src="https://img.shields.io/badge/Homepage-TODO-D1D5DB?style=for-the-badge" alt="Homepage TODO"></a>
-  <a href="#resources"><img src="https://img.shields.io/badge/Project%20Page-TODO-D1D5DB?style=for-the-badge" alt="Project Page TODO"></a>
-  <a href="#resources"><img src="https://img.shields.io/badge/Model%20CKPT-TODO-D1D5DB?style=for-the-badge" alt="Model CKPT TODO"></a>
-  <a href="#resources"><img src="https://img.shields.io/badge/Dataset-TODO-D1D5DB?style=for-the-badge" alt="Dataset TODO"></a>
-  <a href="#resources"><img src="https://img.shields.io/badge/HuggingFace-TODO-D1D5DB?style=for-the-badge" alt="Hugging Face TODO"></a>
+  <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-Live-111827?style=for-the-badge" alt="Homepage"></a>
+  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories"><img src="https://img.shields.io/badge/Model%20CKPT-Live-111827?style=for-the-badge" alt="Model CKPT"></a>
+  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-Live-111827?style=for-the-badge" alt="Dataset"></a>
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper Coming Soon"></a>
 </p>
 
 </div>
-
-> [!NOTE]
-> This repository is being prepared for a cleaner public release. The homepage, project page, model checkpoint, dataset card, and Hugging Face links are intentionally left as `TODO` placeholders for now and can be filled in later.
 
 ## Introduction
 
@@ -36,8 +27,6 @@
 
 The current codebase centers on local retrieval setups for deep information-seeking benchmarks such as **BrowseComp-Plus** and **InfoSeek-Eval**, while supporting multiple agent backends including **Tongyi DeepResearch**, **WebExplorer**, **AgentCPM**, and OpenAI-compatible APIs.
 
-The README structure is inspired by the presentation style commonly used in polished open-source research repositories such as **Alibaba-NLP/DeepResearch** and **OpenClaw**: clear top-level positioning, prominent resource entry points, a compact quick-start path, and navigable documentation links.
-
 <p align="center">
   <img src="assets/paper-figures/method_7.png" width="100%" alt="LRAT method overview from the paper">
 </p>
@@ -45,7 +34,7 @@ The README structure is inspired by the presentation style commonly used in poli
 ## News
 
 - `2026/03/23`: Repository front page reorganized into a cleaner public-release format.
-- `2026/03/23`: Added placeholder sections for homepage, checkpoint, dataset, Hugging Face, and paper release.
+- `2026/03/24`: Added homepage, checkpoint, and dataset entry points.
 
 ## Highlights
 
@@ -59,11 +48,9 @@ The README structure is inspired by the presentation style commonly used in poli
 
 | Resource | Status |
 | --- | --- |
-| Homepage | `TODO` |
-| Project Page | `TODO` |
-| Model Checkpoint | `TODO` |
-| Dataset Release | `TODO` |
-| Hugging Face | `TODO` |
+| Homepage | [Project Page](https://yuqi-zhou.github.io/LRAT-homepage/) |
+| Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories) |
+| Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
 | arXiv Paper | `TODO` |
 
 ## Repository Overview
