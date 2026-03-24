@@ -2,6 +2,8 @@ import argparse
 import json
 import csv
 import re
+import os
+import logging
 from pathlib import Path
 from typing import Dict, List
 from collections import defaultdict
@@ -10,7 +12,14 @@ import numpy as np
 from tqdm import tqdm
 from vllm import LLM, SamplingParams
 
-JUDGE_TEMPLATE = """
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv("LRAT_LOG_LEVEL", "INFO").upper(), logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+JUDGE_TEMPLATE = r"""
 Judge whether the following [response] to [question] is correct or not based on the precise and unambiguous [correct_answer] below.
 
 [question]: {question}
@@ -42,7 +51,7 @@ class DatasetLoader:
         if not path.exists():
             raise FileNotFoundError(f"GT file not found: {path}")
 
-        print(f"Loading GT from {path}...")
+        logger.info("Loading GT from %s", path)
         with open(path, "r", encoding="utf-8") as f:
             reader = csv.reader(f, delimiter="\t", quoting=csv.QUOTE_NONE)
             for row in reader:
@@ -53,7 +62,7 @@ class DatasetLoader:
                 answer = row[2].strip()
                 gt_data[q_id] = {"question": question, "answer": answer}
 
-        print(f"Loaded {len(gt_data)} samples.")
+        logger.info("Loaded %s GT samples", len(gt_data))
         return gt_data
 
 
@@ -124,7 +133,7 @@ def main():
     evaluation_queue = []
     recalls = []
 
-    print(f"Pre-processing {len(input_files)} files...")
+    logger.info("Pre-processing %s files", len(input_files))
     for json_file in tqdm(input_files, desc="Reading JSON"):
         try:
             with open(json_file, "r", encoding="utf-8") as f:
@@ -178,10 +187,10 @@ def main():
         recalls.append(recall)
 
     if not evaluation_queue:
-        print("No valid data to evaluate.")
+        logger.warning("No valid data to evaluate")
         return
 
-    print(f"Loading model: {args.model_path}")
+    logger.info("Loading model: %s", args.model_path)
     sampling_params = SamplingParams(
         temperature=0.0,
         max_tokens=512,
@@ -198,7 +207,11 @@ def main():
     all_results = []
     correct_count = 0
 
-    print(f"Starting batched inference: batch_size={args.batch_size}, total={len(evaluation_queue)}")
+    logger.info(
+        "Starting batched inference | batch_size=%s total=%s",
+        args.batch_size,
+        len(evaluation_queue),
+    )
     for batch in tqdm(list(chunked(evaluation_queue, args.batch_size)), desc="Inference"):
         prompts = [item["prompt"] for item in batch]
         outputs = llm.generate(prompts, sampling_params)
@@ -237,18 +250,18 @@ def main():
     if args.dataset_type == "browsecomp-plus":
         final_metrics["Evidence Recall"] = float(np.mean([x["recall"] for x in all_results])) if total else 0.0
 
-    print("\n" + "=" * 30)
-    print("Evaluation Summary")
+    logger.info("=" * 30)
+    logger.info("Evaluation Summary")
     for k, v in final_metrics.items():
-        print(f"{k}: {v:.4f}")
-    print("=" * 30)
+        logger.info("%s: %.4f", k, v)
+    logger.info("=" * 30)
 
     output_path = Path(args.output_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump({"metrics": final_metrics, "details": all_results}, f, indent=2, ensure_ascii=False)
 
-    print(f"Results saved to {args.output_file}")
+    logger.info("Results saved to %s", args.output_file)
 
 
 if __name__ == "__main__":

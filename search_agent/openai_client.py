@@ -1,6 +1,7 @@
 import argparse
 import csv
 import json
+import logging
 import os
 import sys
 import time
@@ -8,7 +9,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from dotenv import load_dotenv
-from rich import print as rprint
 from tqdm import tqdm
 from openai import OpenAI
 from transformers import AutoTokenizer
@@ -16,9 +16,21 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from prompts import format_query
 from searcher.searchers import SearcherType
 
-from openai import OpenAI
 
-API_KEY = os.getenv("API_KEYS", "")
+logging.basicConfig(
+    level=getattr(logging, os.getenv("LRAT_LOG_LEVEL", "INFO").upper(), logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
+logger = logging.getLogger(__name__)
+
+
+def get_api_key() -> str:
+    return os.getenv("API_KEYS") or os.getenv("API_KEY") or ""
+
+
+def get_base_url() -> str:
+    return os.getenv("URL") or os.getenv("BASE_URL") or ""
+
 
 class SearchToolHandler:
     def __init__(
@@ -135,7 +147,7 @@ def handle_conversation(args, tool_handler, query_text, qid=None):
         response = None
         for i in range(5):
             try:
-                client = OpenAI(base_url=os.getenv("URL", ""), api_key=API_KEY)
+                client = OpenAI(base_url=get_base_url(), api_key=get_api_key())
                 if 'minimax' in args.model.lower():
                     extra_body={"reasoning_split": True}
                 elif 'glm' in args.model.lower():
@@ -158,6 +170,7 @@ def handle_conversation(args, tool_handler, query_text, qid=None):
                 break
             except Exception as e:
                 if i < 5:
+                    logger.warning("Chat completion attempt %s failed: %s", i + 1, e)
                     time.sleep(5)
 
         if response is None:
@@ -297,8 +310,7 @@ def _persist_response(out_dir, model_name, messages, tool_counts, query_id, tota
             json.dump(record, f, indent=2, ensure_ascii=False)
 
     except Exception as e:
-        import traceback
-        traceback.print_exc()
+        logger.exception("Failed to persist response: %s", e)
 
 def main():
     parser = argparse.ArgumentParser(description="MiniMax-M2 DeepSearch Client")
@@ -327,7 +339,7 @@ def main():
         searcher=searcher,
         snippet_max_tokens=args.snippet_max_tokens,
         k=args.k,
-        include_get_document=True
+        include_get_document=args.get_document,
     )
 
     if args.query.endswith(".tsv"):
@@ -354,12 +366,12 @@ def main():
         
         remaining_queries = [q for q in queries if q[0] not in processed_ids]
         
-        print(f"[*] Dataset total: {len(queries)}")
-        print(f"[*] Already processed: {len(processed_ids)}")
-        print(f"[*] Remaining to run: {len(remaining_queries)}")
+        logger.info("Dataset total: %s", len(queries))
+        logger.info("Already processed: %s", len(processed_ids))
+        logger.info("Remaining to run: %s", len(remaining_queries))
 
         if not remaining_queries:
-            print("[!] All queries in the TSV have been processed. Exiting.")
+            logger.info("All queries in the TSV have been processed. Exiting.")
             return
 
         with ThreadPoolExecutor(max_workers=args.num_threads) as executor:
@@ -374,8 +386,11 @@ def main():
                     try:
                         future.result()
                     except Exception as e:
-                        print(f"\n[Error] Query {qid} failed: {e}")
+                        logger.error("Query %s failed: %s", qid, e)
                     pbar.update(1)
+    else:
+        logger.info("Processing single query")
+        handle_conversation(args, tool_handler, args.query, None)
                     
 if __name__ == "__main__":
     load_dotenv()

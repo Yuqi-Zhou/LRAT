@@ -1,22 +1,41 @@
-## Evaluation (vLLM Judge)
+# Evaluation
 
-This evaluation script reads the agent outputs (one `*.json` per query) and uses a **local judge model** loaded by **vLLM** to decide whether each final response is correct given the ground-truth answer. It reports summary metrics (e.g., Success Rate, Avg Steps) and saves per-sample judging details to a JSON file.
+This repository evaluates final agent responses with a local judge model loaded through vLLM.
 
-### Inputs
+## Script
 
-- `--input_dir`: Directory containing agent output JSON files (`*.json`).
-- `--gt_path`: Ground-truth TSV file (must contain at least: `query_id`, `question`, `answer`).
-- `--dataset_type`: `browsecomp-plus` or `InfoSeek-Eval`.
-- `--qrel_path`: Only required for `browsecomp-plus`, used to compute evidence recall.
-- `--model_path`: Local judge model path (loaded by vLLM).
-- `--batch_size`: Inference batch size (fixed to 32 in the examples below).
+```text
+scripts_evaluation/evaluate.py
+```
 
-### Example: Evaluate `browsecomp-plus`
+## What the Script Does
+
+For each saved trajectory output JSON:
+
+1. load the matching ground-truth question and answer,
+2. extract the final agent response,
+3. ask a local judge model whether the response is correct, and
+4. aggregate success and trajectory statistics.
+
+For `browsecomp-plus`, the script can also compute evidence recall from qrels.
+
+## Inputs
+
+| Argument | Meaning |
+| --- | --- |
+| `--input_dir` | Directory containing per-query run JSON files |
+| `--gt_path` | Ground-truth TSV file with at least `query_id`, `question`, `answer` |
+| `--dataset_type` | `browsecomp-plus` or `InfoSeek-Eval` |
+| `--output_file` | Path to save the evaluation JSON |
+| `--model_path` | Local vLLM judge model path |
+| `--qrel_path` | Required for `browsecomp-plus` if you want evidence recall |
+| `--tensor_parallel_size` | Tensor-parallel size for vLLM |
+| `--gpu_memory_utilization` | GPU memory utilization ratio |
+| `--batch_size` | Batched judge inference size |
+
+## Example: BrowseComp-Plus
 
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
 python scripts_evaluation/evaluate.py \
   --input_dir /path/to/agent_output_json_dir \
   --gt_path /path/to/browsecomp-plus.tsv \
@@ -29,12 +48,9 @@ python scripts_evaluation/evaluate.py \
   --batch_size 32
 ```
 
-### Example: Evaluate `InfoSeek-Eval` (no qrels required)
+## Example: InfoSeek-Eval
 
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
 python scripts_evaluation/evaluate.py \
   --input_dir /path/to/agent_output_json_dir \
   --gt_path /path/to/InfoSeek-Eval.tsv \
@@ -46,9 +62,22 @@ python scripts_evaluation/evaluate.py \
   --batch_size 32
 ```
 
-### Output
+## Output JSON
 
-The script writes a JSON file to `--output_file` with the following structure:
+The output file written to `--output_file` contains:
 
-- `metrics`: aggregated scores (e.g., `Success Rate`, `Avg Steps`, and `Evidence Recall` for browsecomp-plus)
-- `details`: per-sample records, including the judge text and whether the answer is correct
+- `metrics`: aggregated metrics such as success rate, average steps, and evidence recall
+- `details`: per-sample judge results
+
+## Important Matching Rule
+
+The evaluation script matches trajectory files to ground truth through `query_id`, so make sure:
+
+- your trajectory JSON files keep valid `query_id` values, and
+- those IDs match the first column of the ground-truth TSV.
+
+## Recommended Practice
+
+- Use the same `input_dir` naming convention as your training/evaluation experiment names
+- Save one evaluation JSON per model / retriever / dataset combination
+- Keep judge settings fixed when comparing multiple retrievers

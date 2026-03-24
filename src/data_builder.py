@@ -14,7 +14,7 @@ Outputs:
   query, pos, neg, pos_id, neg_id, reasoning_len, satisfied, reweight_rate
 
 Example:
-python build_pairs.py \
+python src/data_builder.py \
   --corpus-path /root/corpus/wiki-25/all/wiki-25-512-final.jsonl \
   --traj-dir /root/runs/wiki-25/tongyi/true_false/qwen3-0.6b_topk10_true \
   --output-path /root/training_data/tongyi/qwen3-0.6b/v3.jsonl \
@@ -28,6 +28,7 @@ python build_pairs.py \
 import os
 import re
 import json
+import logging
 import math
 import time
 import string
@@ -39,6 +40,13 @@ import requests
 from tqdm import tqdm
 from transformers import AutoTokenizer
 from concurrent.futures import ProcessPoolExecutor, as_completed, TimeoutError
+
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv("LRAT_LOG_LEVEL", "INFO").upper(), logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 
 BROWSE_TOOLS = {"get_document", "visit"}
@@ -80,14 +88,15 @@ def load_all_trajectories(dir_path: str, verbose: bool = True) -> List[Dict[str,
         except Exception as e:
             failed += 1
             if verbose:
-                print(f"[WARN] Failed to read {fname}: {e}")
+                logger.warning("Failed to read %s: %s", fname, e)
 
     if verbose:
-        print("========================================")
-        print(f"Total files:           {total}")
-        print(f"Loaded trajectories:   {loaded}")
-        print(f"Skipped/failed:        {failed}")
-        print("========================================")
+        logger.info(
+            "Trajectory loading summary | total=%s loaded=%s skipped_or_failed=%s",
+            total,
+            loaded,
+            failed,
+        )
 
     return trajectories
 
@@ -474,7 +483,9 @@ def main():
     corpus_data = load_corpus_jsonl(args.corpus_path)
     trajectories = load_all_trajectories(args.traj_dir, verbose=True)
 
-    os.makedirs(os.path.dirname(args.output_path), exist_ok=True)
+    output_dir = os.path.dirname(args.output_path)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
 
     all_samples: List[Dict[str, Any]] = []
 
@@ -489,17 +500,22 @@ def main():
             try:
                 ss = fu.result(timeout=args.future_timeout)
             except TimeoutError:
-                print(f"[WARN] Timeout on trajectory index: {idx}")
+                logger.warning("Timeout on trajectory index: %s", idx)
                 continue
             except Exception as e:
-                print(f"[WARN] Error on trajectory index: {idx}: {repr(e)}")
+                logger.warning("Error on trajectory index %s: %r", idx, e)
                 continue
 
             if ss:
                 all_samples.extend(ss)
 
     half_life, mean_w = add_reweight_rate(all_samples)
-    print(f"half_life={half_life} mean_raw_weight={mean_w} N={len(all_samples)}")
+    logger.info(
+        "Finished building samples | half_life=%s mean_raw_weight=%s sample_count=%s",
+        half_life,
+        mean_w,
+        len(all_samples),
+    )
 
     with open(args.output_path, "w", encoding="utf-8") as f:
         for s in all_samples:

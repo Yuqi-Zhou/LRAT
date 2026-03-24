@@ -1,0 +1,23 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="420" rx="24" fill="#F8FAFC"/>
+  <text x="50" y="60" fill="#0F172A" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">
+    Recommended Experiment Layout
+  </text>
+  <text x="50" y="94" fill="#475569" font-family="Arial, Helvetica, sans-serif" font-size="18">
+    A consistent folder structure makes trajectory generation, training-data construction, checkpoints, and evaluation easier to compare.
+  </text>
+
+  <rect x="50" y="130" width="1100" height="240" rx="20" fill="#0F172A"/>
+  <g font-family="Consolas, 'Courier New', monospace" font-size="22" fill="#E2E8F0">
+    <text x="85" y="175">experiments/</text>
+    <text x="85" y="210">  browsecomp_qwen3e5_bm25/</text>
+    <text x="85" y="245">    indexes/</text>
+    <text x="85" y="280">    runs/</text>
+    <text x="85" y="315">    training_data/</text>
+    <text x="85" y="350">    checkpoints/</text>
+    <text x="560" y="245">    eval/</text>
+    <text x="560" y="280">    logs/</text>
+    <text x="560" y="315">    configs/</text>
+    <text x="560" y="350">    README.md</text>
+  </g>
+</svg>

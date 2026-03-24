@@ -3,6 +3,7 @@
 # Modified to use only our local search tool to adhere to BrowseComp-Plus evaluation
 
 import json5
+import logging
 import os
 from typing import Dict, List, Optional, Union
 from qwen_agent.llm.schema import Message
@@ -73,6 +74,9 @@ import random
 import datetime
 
 
+logger = logging.getLogger(__name__)
+
+
 def today_date():
     return datetime.date.today().strftime("%Y-%m-%d")
 
@@ -130,25 +134,26 @@ class MultiTurnReactAgent(FnCallAgent):
                 if content and content.strip():
                     return content.strip(), finish_reason
                 else:
-                    print("==="*10)
-                    print(f"self.enable_thinking: {self.enable_thinking}")
-                    print(f"chat_response.choices[0].message: {chat_response.choices[0].message}")
-                    print(f"Warning: Attempt {attempt + 1} received an empty response.")
-                    print("==="*10)
+                    logger.warning(
+                        "Attempt %s received an empty response. enable_thinking=%s message=%s",
+                        attempt + 1,
+                        self.enable_thinking,
+                        chat_response.choices[0].message,
+                    )
 
             except (APIError, APIConnectionError, APITimeoutError) as e:
-                print(f"Error: Attempt {attempt + 1} failed with an API or network error: {e}")
+                logger.warning("Attempt %s failed with an API/network error: %s", attempt + 1, e)
             except Exception as e:
-                print(f"Error: Attempt {attempt + 1} failed with an unexpected error: {e}")
+                logger.warning("Attempt %s failed with an unexpected error: %s", attempt + 1, e)
 
             if attempt < max_tries - 1:
                 sleep_time = base_sleep_time * (2 ** attempt) + random.uniform(0, 1)
                 sleep_time = min(sleep_time, 30) 
                 
-                print(f"Retrying in {sleep_time:.2f} seconds...")
+                logger.info("Retrying in %.2f seconds...", sleep_time)
                 time.sleep(sleep_time)
             else:
-                print("Error: All retry attempts have been exhausted. The call has failed.")
+                logger.error("All retry attempts have been exhausted. The call has failed.")
         
         return f"vllm server error!!!"
 

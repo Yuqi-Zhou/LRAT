@@ -4,6 +4,7 @@
 
 import argparse
 import json
+import logging
 import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
@@ -17,6 +18,13 @@ from webexplorer_utils.react_agent import MultiTurnReactAgent
 from webexplorer_utils.tool_search import SearchToolHandler, GetDocumentToolHandler
 from searcher.searchers import SearcherType
 import re
+
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv("LRAT_LOG_LEVEL", "INFO").upper(), logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 
 def parse_messages_to_result_array(messages: list) -> list:
@@ -125,7 +133,7 @@ def persist_response(output_dir: Path, query_id: str | None, query: str, result:
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2, ensure_ascii=False)
 
-    print(f"Saved response to {filename}")
+    logger.info("Saved response to %s", filename)
 
 
 def process_tsv_dataset(tsv_path: str, agent: MultiTurnReactAgent, args, output_dir: Path):
@@ -156,7 +164,12 @@ def process_tsv_dataset(tsv_path: str, agent: MultiTurnReactAgent, args, output_
     
     remaining = [(qid, qtext) for qid, qtext in queries if qid not in processed_ids]
     
-    print(f"Processing {len(remaining)} remaining queries (skipping {len(processed_ids)}) from {dataset_path}")
+    logger.info(
+        "Processing %s remaining queries (skipping %s) from %s",
+        len(remaining),
+        len(processed_ids),
+        dataset_path,
+    )
     
     def handle_single_query(qid: str, qtext: str):
         task_data = {
@@ -168,7 +181,7 @@ def process_tsv_dataset(tsv_path: str, agent: MultiTurnReactAgent, args, output_
             result = agent._run(task_data, args.model)
             persist_response(output_dir, qid, qtext, result, args)
         except Exception as exc:
-            print(f"Error processing query {qid}: {exc}")
+            logger.error("Error processing query %s: %s", qid, exc)
             error_result = {
                 "question": qtext,
                 "error": str(exc),
@@ -221,8 +234,8 @@ def main():
     model = args.model
     output_dir = Path(args.output_dir).expanduser().resolve()
     
-    print(f"Model: {model}")
-    print(f"Output directory: {output_dir}")
+    logger.info("Model: %s", model)
+    logger.info("Output directory: %s", output_dir)
     
     os.makedirs(output_dir, exist_ok=True)
 
@@ -262,11 +275,28 @@ def main():
         potential_path = Path(query_str)
         try:
             if potential_path.is_file():
-                print(f"Begin infere dataset: {potential_path}")
+                logger.info("Processing TSV dataset: %s", potential_path)
                 process_tsv_dataset(str(potential_path), agent, args, output_dir)
                 return
         except OSError:
             pass
+
+    logger.info("Processing single query")
+    task_data = {
+        "item": {"question": query_str, "answer": ""},
+        "planning_port": args.port,
+    }
+    try:
+        result = agent._run(task_data, args.model)
+        persist_response(output_dir, None, query_str, result, args)
+    except Exception as exc:
+        logger.error("Error processing single query: %s", exc)
+        error_result = {
+            "question": query_str,
+            "error": str(exc),
+            "prediction": "[Failed]",
+        }
+        persist_response(output_dir, None, query_str, error_result, args)
 
 if __name__ == "__main__":
     main()

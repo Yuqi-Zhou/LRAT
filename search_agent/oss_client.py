@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import logging
 import os
 import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -11,7 +12,6 @@ from pathlib import Path
 
 import openai
 from prompts import format_query
-from rich import print as rprint
 from tqdm import tqdm
 from transformers import AutoTokenizer
 
@@ -19,6 +19,13 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from utils import extract_retrieved_docids_from_result
 
 from searcher.searchers import SearcherType
+
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv("LRAT_LOG_LEVEL", "INFO").upper(), logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 
 class SearchToolHandler:
@@ -154,8 +161,8 @@ def run_conversation_with_tools(
             )
         except Exception as e:
             if verbose:
-                print(f"Error: {e}")
-                rprint(f"Request: {request}")
+                logger.warning("Responses API call failed on iteration %s: %s", iteration, e)
+                logger.debug("Failed request payload: %s", json.dumps(request, ensure_ascii=False, default=str))
             iteration += 1
             continue
 
@@ -313,7 +320,11 @@ def _persist_response(
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(normalized_record, f, indent=2, default=str)
 
-    print("Saved response to", filename, "| tool call counts:", normalized_tool_counts)
+    logger.info(
+        "Saved response to %s | tool_call_counts=%s",
+        filename,
+        normalized_tool_counts,
+    )
 
 
 def _process_tsv_dataset(
@@ -349,8 +360,11 @@ def _process_tsv_dataset(
 
     remaining = [(qid, qtext) for qid, qtext in queries if qid not in processed_ids]
 
-    print(
-        f"Processing {len(remaining)} remaining queries (skipping {len(processed_ids)}) from {dataset_path} ..."
+    logger.info(
+        "Processing %s remaining queries (skipping %s) from %s",
+        len(remaining),
+        len(processed_ids),
+        dataset_path,
     )
 
     import threading
@@ -388,7 +402,7 @@ def _process_tsv_dataset(
             )
 
         except Exception as exc:
-            print(f"[Error] Query id={qid} failed: {exc}")
+            logger.exception("Query id=%s failed: %s", qid, exc)
             sys.exit(1)
 
     if args.num_threads <= 1:
@@ -525,7 +539,7 @@ def main():
             potential_path = Path(qstr)
             try:
                 if potential_path.is_file():
-                    print("Processing TSV dataset", potential_path)
+                    logger.info("Processing TSV dataset: %s", potential_path)
                     _process_tsv_dataset(
                         str(potential_path), client, args, tool_handler
                     )
@@ -533,7 +547,7 @@ def main():
             except OSError:
                 pass
 
-    print("Processing single query", args.query)
+    logger.info("Processing single query")
 
     args.query = format_query(args.query, args.query_template)
 
@@ -556,7 +570,11 @@ def main():
         args.output_dir, initial_request, messages, tool_usage, status, query_id=None
     )
 
-    rprint(messages)
+    if args.verbose:
+        logger.debug(
+            "Final conversation trace:\n%s",
+            json.dumps(messages, ensure_ascii=False, indent=2, default=str),
+        )
 
 
 if __name__ == "__main__":

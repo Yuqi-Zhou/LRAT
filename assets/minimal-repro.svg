@@ -1,0 +1,36 @@
+<svg width="1200" height="280" viewBox="0 0 1200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="280" rx="24" fill="#FFFDF8"/>
+  <text x="50" y="60" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">
+    Minimal Reproduction Path
+  </text>
+  <text x="50" y="90" fill="#4B5563" font-family="Arial, Helvetica, sans-serif" font-size="18">
+    Install → build an index → run a few queries → build training data → evaluate outputs
+  </text>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#111827">
+    <rect x="50" y="130" width="180" height="90" rx="18" fill="#DBEAFE"/>
+    <text x="78" y="168" font-weight="700">1. Environment</text>
+    <text x="78" y="198">uv sync</text>
+
+    <rect x="280" y="130" width="180" height="90" rx="18" fill="#DCFCE7"/>
+    <text x="308" y="168" font-weight="700">2. Index</text>
+    <text x="308" y="198">src/index_builder.py</text>
+
+    <rect x="510" y="130" width="180" height="90" rx="18" fill="#FEF3C7"/>
+    <text x="538" y="168" font-weight="700">3. Trajectories</text>
+    <text x="538" y="198">search_agent/*.py</text>
+
+    <rect x="740" y="130" width="180" height="90" rx="18" fill="#FCE7F3"/>
+    <text x="768" y="168" font-weight="700">4. Training Data</text>
+    <text x="768" y="198">src/data_builder.py</text>
+
+    <rect x="970" y="130" width="180" height="90" rx="18" fill="#EDE9FE"/>
+    <text x="998" y="168" font-weight="700">5. Evaluation</text>
+    <text x="998" y="198">scripts_evaluation</text>
+  </g>
+
+  <path d="M231 175H274" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+  <path d="M461 175H504" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+  <path d="M691 175H734" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+  <path d="M921 175H964" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+</svg>

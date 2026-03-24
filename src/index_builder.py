@@ -2,6 +2,7 @@ import os
 import faiss
 import json
 import warnings
+import logging
 import numpy as np
 from typing import cast, List, Dict
 import shutil
@@ -11,6 +12,13 @@ import torch
 from tqdm import tqdm
 import datasets
 from transformers import AutoTokenizer, AutoModel, AutoConfig
+
+
+logging.basicConfig(
+    level=getattr(logging, os.getenv("LRAT_LOG_LEVEL", "INFO").upper(), logging.INFO),
+    format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 
 def load_model(
@@ -88,7 +96,7 @@ class Index_Builder:
         self.faiss_gpu = faiss_gpu
 
         self.gpu_num = torch.cuda.device_count()
-        print(self.save_dir)
+        logger.info("Index artifacts will be written to %s", self.save_dir)
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
         else:
@@ -101,7 +109,7 @@ class Index_Builder:
 
         self.corpus = load_corpus(self.corpus_path)
        
-        print("Finish loading...")
+        logger.info("Loaded corpus from %s", self.corpus_path)
     @staticmethod
     def _check_dir(dir_path):
         r"""Check if the dir path exists and if there is content.
@@ -135,11 +143,11 @@ class Index_Builder:
         os.makedirs(self.save_dir, exist_ok=True)
         temp_dir = self.save_dir + "/temp"
         temp_file_path = temp_dir + "/temp.jsonl"
-        os.makedirs(temp_dir)
+        os.makedirs(temp_dir, exist_ok=True)
 
         shutil.copyfile(self.corpus_path, temp_file_path)
         
-        print("Start building bm25 index...")
+        logger.info("Starting BM25 index build")
         pyserini_args = [
             "--collection", "JsonCollection",
             "--input", temp_dir,
@@ -153,7 +161,7 @@ class Index_Builder:
 
         shutil.rmtree(temp_dir)
         
-        print("Finish!")
+        logger.info("BM25 index build finished")
 
     def _load_embedding(self, embedding_path, corpus_size, hidden_size):
         all_embeddings = np.memmap(
@@ -182,7 +190,7 @@ class Index_Builder:
 
     def encode_all(self):
         if self.gpu_num > 1:
-            print("Use multi gpu!")
+            logger.info("Using multi-GPU encoding across %s devices", self.gpu_num)
             self.encoder = torch.nn.DataParallel(self.encoder)
             self.batch_size = self.batch_size * self.gpu_num
 
@@ -239,7 +247,7 @@ class Index_Builder:
         """
         
         if os.path.exists(self.index_save_path):
-            print("The index file already exists and will be overwritten.")
+            logger.warning("Index file already exists and will be overwritten: %s", self.index_save_path)
         
         self.encoder, self.tokenizer = load_model(model_path = self.model_path, 
                                                   use_fp16 = self.use_fp16)
@@ -253,7 +261,7 @@ class Index_Builder:
                 self._save_embedding(all_embeddings)
             del self.corpus
 
-        print("Creating index")
+        logger.info("Creating FAISS index with type=%s", self.faiss_type)
         dim = all_embeddings.shape[-1]
         faiss_index = faiss.index_factory(dim, self.faiss_type, faiss.METRIC_INNER_PRODUCT)
         
@@ -272,7 +280,7 @@ class Index_Builder:
             faiss_index.add(all_embeddings)
 
         faiss.write_index(faiss_index, self.index_save_path)
-        print("Finish!")
+        logger.info("Dense index build finished: %s", self.index_save_path)
 
 
 MODEL2POOLING = {

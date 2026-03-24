@@ -1,158 +1,312 @@
-# Learning to Retrieve from Agent Trajectories (SIGIR 2026 Submission)
+<div align="center">
 
----
+# Learning to Retrieve from Agent Trajectories
+### LRAT
 
-## 📚 Navigation
+<p><strong>Training retrieval models from long-horizon agent search trajectories for deep information-seeking tasks.</strong></p>
 
-| Section | Description |
-|---------|-------------|
-| [Repository Layout](#repository-layout) | Overview of trajectory data, training data, evaluation datasets, and prompts |
-| [Dataset Preparation](#dataset-preparation) | Instructions for corpus download & preprocessing |
-| [Model List](#model-list) | Available retrievers & agents |
-| [Environment Setup](#0-environment-setup) | Python, Java, and dependencies installation |
-| [Index Construction](#1-index-construction) | Creating indexes for retrieval |
-| [Trajectory Construction](#2-trajectory-construction) | Generating agent trajectories |
-| [Training Data Construction](#3-training-data-construction-from-trajectories) | Building retriever training datasets |
-| [Retriever Training](#4-retriever-training) | Fine-tuning the retriever |
-| [Evaluation](#5-evaluation) | Evaluating trajectories and retrieval performance |
-| [Acknowledgements](#acknowledgements) | Credits for datasets, repositories, and tools |
+<p>
+  <img src="https://img.shields.io/badge/Task-Agent%20Trajectory%20Learning-0F766E?style=for-the-badge" alt="Task">
+  <img src="https://img.shields.io/badge/Retrieval-BM25%20%7C%20FAISS%20%7C%20ReasonIR-1D4ED8?style=for-the-badge" alt="Retrieval">
+  <img src="https://img.shields.io/badge/Benchmarks-BrowseComp--Plus%20%7C%20InfoSeek--Eval-7C3AED?style=for-the-badge" alt="Benchmarks">
+</p>
 
----
+<p>
+  <a href="#resources"><img src="https://img.shields.io/badge/Homepage-TODO-D1D5DB?style=for-the-badge" alt="Homepage TODO"></a>
+  <a href="#resources"><img src="https://img.shields.io/badge/Project%20Page-TODO-D1D5DB?style=for-the-badge" alt="Project Page TODO"></a>
+  <a href="#resources"><img src="https://img.shields.io/badge/Model%20CKPT-TODO-D1D5DB?style=for-the-badge" alt="Model CKPT TODO"></a>
+  <a href="#resources"><img src="https://img.shields.io/badge/Dataset-TODO-D1D5DB?style=for-the-badge" alt="Dataset TODO"></a>
+  <a href="#resources"><img src="https://img.shields.io/badge/HuggingFace-TODO-D1D5DB?style=for-the-badge" alt="Hugging Face TODO"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper Coming Soon"></a>
+</p>
 
-## Repository Layout
+</div>
 
-### Trajectory Data
-- Example trajectories are available under: `trajectory/bm25/`  
+> [!NOTE]
+> This repository is being prepared for a cleaner public release. The homepage, project page, model checkpoint, dataset card, and Hugging Face links are intentionally left as `TODO` placeholders for now and can be filled in later.
 
-### Training Data
-- Sample training set: `FlagEmbedding-master/examples/finetune/embedder/example_data/sample_data.jsonl`  
+## Introduction
 
-### Evaluation Data
-- Evaluation datasets: `datasets/` (includes **BrowseComp-Plus** and **InfoSeek-Eval**)  
+**LRAT** studies how to train retrievers from the intermediate behaviors of strong search agents rather than from only final answers. The repository focuses on a practical pipeline for:
 
-### Prompts
-- Prompts for each pipeline stage are located in their respective folders.
+- collecting long-horizon search trajectories from agentic systems,
+- converting trajectories into retrieval supervision,
+- training retrievers on the resulting samples, and
+- evaluating both retrieval quality and end-to-end task success.
 
----
+The current codebase centers on local retrieval setups for deep information-seeking benchmarks such as **BrowseComp-Plus** and **InfoSeek-Eval**, while supporting multiple agent backends including **Tongyi DeepResearch**, **WebExplorer**, **AgentCPM**, and OpenAI-compatible APIs.
 
-## Dataset Preparation
+The README structure is inspired by the presentation style commonly used in polished open-source research repositories such as **Alibaba-NLP/DeepResearch** and **OpenClaw**: clear top-level positioning, prominent resource entry points, a compact quick-start path, and navigable documentation links.
 
-### Corpus Preparation
+<p align="center">
+  <img src="assets/lrat-overview.svg" width="100%" alt="LRAT pipeline overview">
+</p>
 
-1️⃣ **BrowseComp-Plus Corpus (Tevatron)**
+## News
 
-```python
-from datasets import load_dataset
-ds = load_dataset("Tevatron/browsecomp-plus-corpus", split="train")
-````
+- `2026/03/23`: Repository front page reorganized into a cleaner public-release format.
+- `2026/03/23`: Added placeholder sections for homepage, checkpoint, dataset, Hugging Face, and paper release.
 
-2️⃣ **Wiki-25-512 Corpus (InfoSeek / wikidump-25)**
+## Highlights
 
-```python
-from datasets import load_dataset
-ds = load_dataset("Lk123/wiki-25-512")
-```
+- **Trajectory-first retrieval learning**: build retriever supervision from agent search and browse traces instead of relying only on static relevance labels.
+- **Multiple local search backends**: supports `bm25`, `faiss`, and `reasonir` searchers under a shared agent interface.
+- **Agent-friendly data collection**: run local or API-based research agents and save each query as structured trajectory JSON.
+- **Training data construction with an LLM judge**: turn trajectories into `(query, pos, neg, ...)` training pairs with reasoning-aware annotations.
+- **Benchmark-oriented evaluation**: evaluate outputs on `BrowseComp-Plus` and `InfoSeek-Eval` with a local vLLM judge.
 
----
+## Resources
 
-## Model List
+| Resource | Status |
+| --- | --- |
+| Homepage | `TODO` |
+| Project Page | `TODO` |
+| Model Checkpoint | `TODO` |
+| Dataset Release | `TODO` |
+| Hugging Face | `TODO` |
+| arXiv Paper | `TODO` |
 
-### Retriever (Embedding Models)
+## Repository Overview
 
-* `intfloat/multilingual-e5-large-instruct`
-* `Qwen3/Qwen3-Embedding-0.6b`
-* `Qwen3/Qwen3-Embedding-4b`
-* `Qwen3/Qwen3-Embedding-8b`
+| Path | Description |
+| --- | --- |
+| `src/` | Core utilities for index construction and trajectory-to-training-data conversion |
+| `search_agent/` | Agent clients for Tongyi DeepResearch, WebExplorer, AgentCPM, OpenAI-compatible APIs, and related prompts/utilities |
+| `searcher/` | Search backends and local retrieval interfaces |
+| `docs/` | Step-by-step documentation for indexing, trajectory construction, training data construction, and evaluation |
+| `datasets/` | Benchmark files used in evaluation |
+| `topics-qrels/` | Query and qrel files for retrieval experiments |
+| `trajectory/` | Example trajectory artifacts |
+| `FlagEmbedding/` | Local copy of FlagEmbedding used for retriever training |
+| `tevatron/` | Local copy of Tevatron utilities used in dense retrieval workflows |
+| `scripts_evaluation/` | Evaluation scripts for end-to-end judging |
 
-### Agent / LLM
+## Vendored Dependencies
 
-* `openbmb/AgentCPM-Explore`
-* `hkust-nlp/WebExplorer-8B`
-* `Alibaba-NLP/Tongyi-DeepResearch-30B-A3B`
-* `openai/gpt-oss-120b`
+- `FlagEmbedding/` is a vendored and locally modified copy based on the upstream FlagEmbedding project. In this repository, it reflects user-side modifications layered on top of upstream work and earlier external changes.
+- `tevatron/` is a vendored upstream dependency used to support dense retrieval utilities and encoding workflows.
+- More details are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
----
+## Supported Components
 
-## 0. Environment Setup
+### Retriever Backends
+
+- `bm25`
+- `faiss`
+- `reasonir`
+
+### Embedding Models
+
+- `intfloat/multilingual-e5-large-instruct`
+- `Qwen3/Qwen3-Embedding-0.6b`
+- `Qwen3/Qwen3-Embedding-4b`
+- `Qwen3/Qwen3-Embedding-8b`
+
+### Agent / LLM Backends
+
+- `Alibaba-NLP/Tongyi-DeepResearch-30B-A3B`
+- `hkust-nlp/WebExplorer-8B`
+- `openbmb/AgentCPM-Explore`
+- `openai/gpt-oss-120b`
+- OpenAI-compatible API services such as MiniMax / GLM-style endpoints
+
+## Quick Start
+
+The quickest way to understand the repository is:
+
+1. set up the environment,
+2. build a retrieval index,
+3. generate agent trajectories,
+4. convert trajectories into retriever training data,
+5. train a retriever, and
+6. run benchmark evaluation.
+
+### 1. Environment Setup
 
 ```bash
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Sync environment and activate
+# Sync environment
 uv sync
+
+# Optional: activate the environment
 source .venv/bin/activate
 
-# Install dependencies
+# Install flash-attn if needed by your environment
 uv pip install --no-build-isolation flash-attn
 ```
 
-### Java 21 Dependency
+Install Java 21 for the Lucene / Pyserini-based BM25 pipeline:
 
 ```bash
 conda install -c conda-forge openjdk=21
-# or via apt
-sudo apt update
-sudo apt install -y openjdk-21-jdk
 ```
 
-### Install Modified FlagEmbedding
+Install the local FlagEmbedding package:
 
 ```bash
 cd FlagEmbedding
 pip install -e .
+cd ..
 ```
 
----
+### 2. Build Retrieval Indexes
 
-## 1. Index Construction
+See [docs/index.md](docs/index.md) for the full indexing notes.
 
-* Guide: `docs/index.md`
+BM25 template:
 
----
+```bash
+python src/index_builder.py \
+  --retrieval_method bm25 \
+  --corpus_path /path/to/your/corpus.jsonl \
+  --save_dir /path/to/save/index
+```
 
-## 2. Trajectory Construction
+Dense embedding template via Tevatron:
 
-* Guide: `docs/trajectory_construction.md`
+```bash
+CUDA_VISIBLE_DEVICES=0 python -m tevatron.retriever.driver.encode \
+  --model_name_or_path /path/to/your/embedding_model \
+  --dataset_path /path/to/your/corpus.jsonl \
+  --encode_output_path /path/to/save/embeddings.pkl \
+  --passage_max_len 512 \
+  --normalize \
+  --pooling <eos|mean> \
+  --passage_prefix "" \
+  --per_device_eval_batch_size 512 \
+  --padding_side left \
+  --fp16
+```
 
----
+### 3. Generate Agent Trajectories
 
-## 3. Training Data Construction (from Trajectories)
+See [docs/trajectory_construction.md](docs/trajectory_construction.md) for full examples.
 
-* Guide: `docs/training_data_construction.md`
+Example with `Tongyi` and a `bm25` backend:
 
-### Why InfoSeekQA?
+```bash
+python search_agent/tongyi_client.py \
+  --output-dir /path/to/output/dir \
+  --searcher-type bm25 \
+  --index-path /path/to/bm25/index/dir \
+  --num-threads 32 \
+  --model /path/to/agent_or_llm_dir \
+  --snippet-max-tokens 64 \
+  --query /path/to/queries.tsv \
+  --port <PORT> \
+  --k 10
+```
 
-* Multi-step information-seeking tasks are essential.
-* Other benchmarks (NQ, TriviaQA, HotpotQA, etc.) allow shallow retrieval (<3 calls/query).
-* **InfoSeekQA** enforces iterative search and browsing for richer trajectories.
+Example with `Tongyi` and a `faiss` backend:
 
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Lk123-purple?logo=huggingface)](https://huggingface.co/datasets/Lk123/InfoSeek)
+```bash
+python search_agent/tongyi_client.py \
+  --output-dir /path/to/output/dir \
+  --searcher-type faiss \
+  --index-path "/path/to/embeddings/index-*.pkl" \
+  --model-name /path/to/embedding/model \
+  --pooling <mean|eos> \
+  --normalize \
+  --num-threads 32 \
+  --snippet-max-tokens 64 \
+  --query /path/to/queries.tsv \
+  --port <PORT> \
+  --dataset-name /path/to/corpus_or_dataset \
+  --model /path/to/agent_or_llm_dir \
+  --k 10
+```
 
----
+### 4. Build Training Data from Trajectories
 
-## 4. Retriever Training
+See [docs/training_data_construction.md](docs/training_data_construction.md).
 
-* Script: `FlagEmbedding-master/examples/finetune/embedder/run.sh`
+```bash
+python src/data_builder.py \
+  --corpus-path /path/to/your/corpus.jsonl \
+  --traj-dir /path/to/your/trajectory_dir \
+  --output-path /path/to/save/output.jsonl \
+  --tokenizer-path /path/to/your/tokenizer_or_model_dir \
+  --judge-api-url http://<JUDGE_HOST>:<PORT>/v1/chat/completions \
+  --judge-model <JUDGE_MODEL_NAME> \
+  --max-workers 32 \
+  --future-timeout 30
+```
 
-> Run after preparing training data.
+### 5. Train the Retriever
 
----
+The repository currently uses the local `FlagEmbedding` training recipe. Start from:
 
-## 5. Evaluation
+- [FlagEmbedding/examples/finetune/embedder/run.sh](FlagEmbedding/examples/finetune/embedder/run.sh)
+- [FlagEmbedding/examples/finetune/embedder/README.md](FlagEmbedding/examples/finetune/embedder/README.md)
 
-* Guide: `docs/evaluate.md`
+You can plug the JSONL generated by `src/data_builder.py` into your existing training setup without changing the repository-level presentation structure.
 
----
+### 6. Evaluate End-to-End Performance
+
+See [docs/evaluate.md](docs/evaluate.md).
+
+```bash
+python scripts_evaluation/evaluate.py \
+  --input_dir /path/to/agent_output_json_dir \
+  --gt_path /path/to/InfoSeek-Eval.tsv \
+  --dataset_type InfoSeek-Eval \
+  --output_file /path/to/save/eval_results.json \
+  --model_path /path/to/local_judge_model \
+  --tensor_parallel_size <NUM_GPUS> \
+  --gpu_memory_utilization <GPU_MEM_UTIL> \
+  --batch_size 32
+```
+
+## Documentation
+
+| Topic | Link |
+| --- | --- |
+| Index Construction | [docs/index.md](docs/index.md) |
+| Trajectory Construction | [docs/trajectory_construction.md](docs/trajectory_construction.md) |
+| Training Data Construction | [docs/training_data_construction.md](docs/training_data_construction.md) |
+| Minimal Reproduction | [docs/minimal_repro.md](docs/minimal_repro.md) |
+| Experiment Layout | [docs/experiment_layout.md](docs/experiment_layout.md) |
+| Segmented Training Data Experiments | [docs/segmented_training_data_experiment.md](docs/segmented_training_data_experiment.md) |
+| Evaluation | [docs/evaluate.md](docs/evaluate.md) |
+
+## Data and Outputs
+
+- Example benchmark files are stored in `datasets/`.
+- Query and qrel files are stored in `topics-qrels/`.
+- Example trajectory outputs are stored in `trajectory/`.
+- Generated run artifacts are saved as one JSON file per query by the agent clients.
 
 ## Acknowledgements
 
-We gratefully acknowledge the following repositories and datasets:
+This repository builds on and benefits from several excellent open-source projects and public resources:
 
-| Repository                | Maintainer | Link                                                                                                                                     |
-| ------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| 🌐 **BrowseComp-Plus**    | Texttron   | [![GitHub](https://img.shields.io/badge/GitHub-Texttron-blue?logo=github)](https://github.com/texttron/BrowseComp-Plus)                  |
-| ⚡ **FlagEmbedding**       | FlagOpen   | [![GitHub](https://img.shields.io/badge/GitHub-FlagOpen-orange?logo=github)](https://github.com/FlagOpen/FlagEmbedding)                  |
-| 📚 **InfoSeekQA Dataset** | Lk123      | [![HuggingFace](https://img.shields.io/badge/HuggingFace-Lk123-purple?logo=huggingface)](https://huggingface.co/datasets/Lk123/InfoSeek) |
+- [Alibaba-NLP/DeepResearch](https://github.com/Alibaba-NLP/DeepResearch)
+- [openclaw/openclaw](https://github.com/openclaw/openclaw)
+- [FlagOpen/FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding)
+- [texttron/BrowseComp-Plus](https://github.com/texttron/BrowseComp-Plus)
+- [Tevatron](https://github.com/texttron/tevatron)
 
-> These repositories and datasets provided the foundation for trajectory construction, retriever training, and evaluation pipelines in our SIGIR 2026 submission. We sincerely thank all maintainers for making their resources publicly available.
+## License
+
+This repository is released under the Apache License 2.0. See [LICENSE](LICENSE).
+
+Vendored components keep their own upstream licenses, especially:
+
+- `FlagEmbedding/` under its upstream MIT license
+- `tevatron/` under Apache License 2.0
+
+## Citation
+
+If you find this repository useful, you can use the following placeholder citation for now and update it after the paper is uploaded to arXiv:
+
+```bibtex
+@misc{lrat2026,
+  title        = {Learning to Retrieve from Agent Trajectories},
+  author       = {TODO},
+  year         = {2026},
+  howpublished = {Manuscript in preparation},
+  note         = {Project page, checkpoint, dataset, and arXiv link will be released later}
+}
+```
