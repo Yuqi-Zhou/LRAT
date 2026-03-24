@@ -8,10 +8,10 @@
 </p>
 
 <p>
-  <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-Live-2563EB?style=for-the-badge&logo=githubpages&logoColor=white" alt="Homepage"></a>
-  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories"><img src="https://img.shields.io/badge/CKPT-Live-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black" alt="CKPT"></a>
-  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-Live-FACC15?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"></a>
-  <a href="#citation"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper Coming Soon"></a>
+  <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-2563EB?style=for-the-badge&logo=githubpages&logoColor=white" alt="Homepage"></a>
+  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories"><img src="https://img.shields.io/badge/Checkpoints-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black" alt="Checkpoints"></a>
+  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-FCD34D?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/Paper-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper"></a>
 </p>
 
 </div>
@@ -27,13 +27,11 @@
 
 The current codebase centers on local retrieval setups for deep information-seeking benchmarks such as **BrowseComp-Plus** and **InfoSeek-Eval**, while supporting multiple agent backends including **Tongyi DeepResearch**, **WebExplorer**, **AgentCPM**, and OpenAI-compatible APIs.
 
-<p align="center">
-  <img src="./assets/paper-figures/method_7.png" width="100%" alt="LRAT method overview from the paper">
-</p>
+![LRAT method overview from the paper](assets/paper-figures/method_7.png)
 
 ## News
 
-- `2026/03/24`: Open-sourced model checkpoints and the LRAT-Train dataset.
+- `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
 
 ## Highlights
 
