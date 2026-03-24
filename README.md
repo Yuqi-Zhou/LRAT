@@ -8,9 +8,9 @@
 </p>
 
 <p>
-  <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-Live-111827?style=for-the-badge" alt="Homepage"></a>
-  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories"><img src="https://img.shields.io/badge/Model%20CKPT-Live-111827?style=for-the-badge" alt="Model CKPT"></a>
-  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-Live-111827?style=for-the-badge" alt="Dataset"></a>
+  <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-Live-2563EB?style=for-the-badge&logo=githubpages&logoColor=white" alt="Homepage"></a>
+  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories"><img src="https://img.shields.io/badge/CKPT-Live-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black" alt="CKPT"></a>
+  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-Live-FACC15?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"></a>
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-Coming%20Soon-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper Coming Soon"></a>
 </p>
 
@@ -28,18 +28,16 @@
 The current codebase centers on local retrieval setups for deep information-seeking benchmarks such as **BrowseComp-Plus** and **InfoSeek-Eval**, while supporting multiple agent backends including **Tongyi DeepResearch**, **WebExplorer**, **AgentCPM**, and OpenAI-compatible APIs.
 
 <p align="center">
-  <img src="assets/paper-figures/method_7.png" width="100%" alt="LRAT method overview from the paper">
+  <img src="./assets/paper-figures/method_7.png" width="100%" alt="LRAT method overview from the paper">
 </p>
 
 ## News
 
-- `2026/03/23`: Repository front page reorganized into a cleaner public-release format.
-- `2026/03/24`: Added homepage, checkpoint, and dataset entry points.
+- `2026/03/24`: Open-sourced model checkpoints and the LRAT-Train dataset.
 
 ## Highlights
 
 - **Trajectory-first retrieval learning**: build retriever supervision from agent search and browse traces instead of relying only on static relevance labels.
-- **Multiple local search backends**: supports `bm25`, `faiss`, and `reasonir` searchers under a shared agent interface.
 - **Agent-friendly data collection**: run local or API-based research agents and save each query as structured trajectory JSON.
 - **Training data construction with an LLM judge**: turn trajectories into `(query, pos, neg, ...)` training pairs with reasoning-aware annotations.
 - **Benchmark-oriented evaluation**: evaluate outputs on `BrowseComp-Plus` and `InfoSeek-Eval` with a local vLLM judge.
@@ -48,7 +46,7 @@ The current codebase centers on local retrieval setups for deep information-seek
 
 | Resource | Status |
 | --- | --- |
-| Homepage | [Project Page](https://yuqi-zhou.github.io/LRAT-homepage/) |
+| Homepage | [Homepage](https://yuqi-zhou.github.io/LRAT-homepage/) |
 | Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories) |
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
 | arXiv Paper | `TODO` |
@@ -80,14 +78,6 @@ The current codebase centers on local retrieval setups for deep information-seek
 
 - `bm25`
 - `faiss`
-- `reasonir`
-
-### Embedding Models
-
-- `intfloat/multilingual-e5-large-instruct`
-- `Qwen3/Qwen3-Embedding-0.6b`
-- `Qwen3/Qwen3-Embedding-4b`
-- `Qwen3/Qwen3-Embedding-8b`
 
 ### Agent / LLM Backends
 
@@ -208,6 +198,8 @@ python search_agent/tongyi_client.py \
 ### 4. Build Training Data from Trajectories
 
 See [docs/training_data_construction.md](docs/training_data_construction.md).
+
+If you do not want to build training data from scratch, you can directly use the released [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) dataset. If you prefer to control filtering or supervision design yourself, you can also start from saved agent trajectories and rerun pair extraction with `src/data_builder.py`.
 
 ```bash
 python src/data_builder.py \
