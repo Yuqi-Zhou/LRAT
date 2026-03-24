@@ -25,9 +25,7 @@
 - training retrievers on the resulting samples, and
 - evaluating both retrieval quality and end-to-end task success.
 
-<p align="center">
-  <img src="https://github.com/Yuqi-Zhou/LRAT/blob/main/assets/paper-figures/method_7.png?raw=1" width="100%" alt="LRAT method overview from the paper">
-</p>
+![LRAT method overview from the paper](assets/paper-figures/method_7.png)
 
 ## News
 
