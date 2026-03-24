@@ -39,7 +39,7 @@ The current codebase centers on local retrieval setups for deep information-seek
 The README structure is inspired by the presentation style commonly used in polished open-source research repositories such as **Alibaba-NLP/DeepResearch** and **OpenClaw**: clear top-level positioning, prominent resource entry points, a compact quick-start path, and navigable documentation links.
 
 <p align="center">
-  <img src="assets/lrat-overview.svg" width="100%" alt="LRAT pipeline overview">
+  <img src="assets/paper-figures/method_7.png" width="100%" alt="LRAT method overview from the paper">
 </p>
 
 ## News

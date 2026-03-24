@@ -17,7 +17,7 @@ GitHub Pages will then publish:
 
 - `docs/index.html` as the homepage
 - `docs/styles.css` as the site stylesheet
-- `docs/lrat-overview.svg` as the local method overview asset
+- `docs/paper-assets/` as the local paper figure asset folder
 
 ## Current Site Content
 
