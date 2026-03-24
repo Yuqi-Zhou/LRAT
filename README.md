@@ -25,9 +25,12 @@
 - training retrievers on the resulting samples, and
 - evaluating both retrieval quality and end-to-end task success.
 
-The current codebase centers on local retrieval setups for deep information-seeking benchmarks such as **BrowseComp-Plus** and **InfoSeek-Eval**, while supporting multiple agent backends including **Tongyi DeepResearch**, **WebExplorer**, **AgentCPM**, and OpenAI-compatible APIs.
-
-![LRAT method overview from the paper](assets/paper-figures/method_7.png)
+<p align="center">
+  <img src="assets/paper-figures/method_7.png" width="100%" alt="LRAT method overview from the paper">
+</p>
+<p align="center">
+  <a href="assets/paper-figures/method_7.pdf">PDF Version</a>
+</p>
 
 ## News
 
