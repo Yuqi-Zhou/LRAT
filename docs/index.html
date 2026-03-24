@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LRAT | Learning to Retrieve from Agent Trajectories</title>
+    <meta
+      name="description"
+      content="Official project homepage for Learning to Retrieve from Agent Trajectories (LRAT), including trajectory-trained retrievers and training data for agentic search."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Agentic Search / Dense Retrieval / Trajectory Learning</div>
+            <h1>Learning to Retrieve from Agent Trajectories</h1>
+            <p class="hero-text">
+              LRAT trains retrieval models directly from multi-step search-agent trajectories.
+              Instead of relying on human click logs, it mines supervision from agent search,
+              browsing, and post-browse reasoning traces to build retrievers aligned with
+              agentic search.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="https://github.com/Yuqi-Zhou/LRAT" target="_blank" rel="noreferrer">GitHub</a>
+              <a class="button" href="https://huggingface.co/Yuqi-Zhou/LRAT-Qwen3-Embedding-0.6B" target="_blank" rel="noreferrer">Qwen3 Checkpoint</a>
+              <a class="button" href="https://huggingface.co/Yuqi-Zhou/LRAT-multilingual-e5-large" target="_blank" rel="noreferrer">E5 Checkpoint</a>
+              <a class="button" href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train" target="_blank" rel="noreferrer">Training Dataset</a>
+              <span class="button disabled">Paper Coming Soon</span>
+            </div>
+            <div class="hero-note">
+              Author list, arXiv link, and final project metadata will be updated after public paper release.
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="stat-grid">
+              <article class="stat-card">
+                <div class="stat-value">26,482</div>
+                <div class="stat-label">Valid agent trajectories</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-value">91,713</div>
+                <div class="stat-label">Training pairs</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Released checkpoints</div>
+              </article>
+              <article class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Evaluation benchmarks</div>
+              </article>
+            </div>
+            <div class="trajectory-mark" aria-hidden="true">
+              <div class="trajectory-ring"></div>
+              <div class="trajectory-path"></div>
+              <div class="trajectory-node node-a"></div>
+              <div class="trajectory-node node-b"></div>
+              <div class="trajectory-node node-c"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="section">
+          <div class="section-head">
+            <span class="section-kicker">Overview</span>
+            <h2>Why LRAT</h2>
+          </div>
+          <div class="two-column">
+            <div class="callout">
+              <p>
+                Retrieval systems have traditionally been optimized for human users. In agentic
+                search, retrieval is instead consumed by search agents that issue intermediate
+                queries, inspect snippets, browse documents, and continue reasoning over evidence.
+              </p>
+              <p>
+                LRAT addresses this mismatch by learning directly from agent trajectories. It
+                treats trajectories as the agent-era counterpart of user interaction logs and
+                turns them into high-quality supervision for dense retriever training.
+              </p>
+            </div>
+            <div class="bullet-panel">
+              <div class="mini-card">
+                <h3>Trajectory-derived positives</h3>
+                <p>Browsed documents after search steps become positive candidates.</p>
+              </div>
+              <div class="mini-card">
+                <h3>Agent-aligned negatives</h3>
+                <p>Unbrowsed retrieved documents serve as reliable negatives without human-style position bias correction.</p>
+              </div>
+              <div class="mini-card">
+                <h3>Reasoning-aware weighting</h3>
+                <p>Post-browse reasoning traces refine positives and induce soft relevance weights.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section spotlight">
+          <div class="section-head">
+            <span class="section-kicker">Method</span>
+            <h2>From search trajectories to retriever training</h2>
+          </div>
+          <div class="method-grid">
+            <article class="method-step">
+              <div class="step-index">01</div>
+              <h3>Collect deep research trajectories</h3>
+              <p>
+                Generate long-horizon trajectories from a search agent over InfoSeekQA with local retrieval systems.
+              </p>
+            </article>
+            <article class="method-step">
+              <div class="step-index">02</div>
+              <h3>Mine supervision from behavior</h3>
+              <p>
+                Use browse actions as coarse positives, unbrowsed items as negatives, and post-browse reasoning to filter noise.
+              </p>
+            </article>
+            <article class="method-step">
+              <div class="step-index">03</div>
+              <h3>Train with relevance intensity</h3>
+              <p>
+                Convert reasoning length into a soft utility weight and optimize a dense retriever with weighted contrastive learning.
+              </p>
+            </article>
+          </div>
+          <div class="overview-card">
+            <img src="./lrat-overview.svg" alt="LRAT pipeline overview" />
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <span class="section-kicker">Resources</span>
+            <h2>Released assets</h2>
+          </div>
+          <div class="resource-grid">
+            <article class="resource-card accent-teal">
+              <div class="resource-type">Model</div>
+              <h3>LRAT-Qwen3-Embedding-0.6B</h3>
+              <p>
+                Trajectory-trained dense retriever built on Qwen3-Embedding-0.6B and optimized for agentic search.
+              </p>
+              <a href="https://huggingface.co/Yuqi-Zhou/LRAT-Qwen3-Embedding-0.6B" target="_blank" rel="noreferrer">Open checkpoint</a>
+            </article>
+            <article class="resource-card accent-blue">
+              <div class="resource-type">Model</div>
+              <h3>LRAT-multilingual-e5-large</h3>
+              <p>
+                Trajectory-trained dense retriever built on multilingual-e5-large-instruct for agent-aligned retrieval.
+              </p>
+              <a href="https://huggingface.co/Yuqi-Zhou/LRAT-multilingual-e5-large" target="_blank" rel="noreferrer">Open checkpoint</a>
+            </article>
+            <article class="resource-card accent-sand">
+              <div class="resource-type">Dataset</div>
+              <h3>LRAT-Train</h3>
+              <p>
+                Training data constructed from deep research agent trajectories with reasoning-aware filtering and weighting.
+              </p>
+              <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train" target="_blank" rel="noreferrer">Open dataset</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <span class="section-kicker">Documentation</span>
+            <h2>Repository guides</h2>
+          </div>
+          <div class="resource-grid">
+            <article class="resource-card accent-teal">
+              <div class="resource-type">Docs</div>
+              <h3>Index Construction</h3>
+              <p>
+                Build BM25 or dense retrieval indexes and prepare retrieval assets for agent runs.
+              </p>
+              <a href="https://github.com/Yuqi-Zhou/LRAT/blob/main/docs/index.md" target="_blank" rel="noreferrer">Open guide</a>
+            </article>
+            <article class="resource-card accent-blue">
+              <div class="resource-type">Docs</div>
+              <h3>Trajectory Construction</h3>
+              <p>
+                Run local search agents and save per-query JSON trajectories for LRAT-style supervision.
+              </p>
+              <a href="https://github.com/Yuqi-Zhou/LRAT/blob/main/docs/trajectory_construction.md" target="_blank" rel="noreferrer">Open guide</a>
+            </article>
+            <article class="resource-card accent-sand">
+              <div class="resource-type">Docs</div>
+              <h3>Training Data Construction</h3>
+              <p>
+                Convert agent trajectories into weighted retrieval supervision with LRAT data builders.
+              </p>
+              <a href="https://github.com/Yuqi-Zhou/LRAT/blob/main/docs/training_data_construction.md" target="_blank" rel="noreferrer">Open guide</a>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <span class="section-kicker">Results</span>
+            <h2>Performance snapshot</h2>
+          </div>
+          <div class="result-summary">
+            <div class="result-card">
+              <div class="result-pill">Qwen3 backbone</div>
+              <p>
+                LRAT consistently improves end-to-end success rate and evidence recall across AgentCPM-Explore, WebExplore, Tongyi-DeepResearch, GPT-OSS, MiniMax-M2.1, and GLM-4.7.
+              </p>
+            </div>
+            <div class="result-card">
+              <div class="result-pill">E5 backbone</div>
+              <p>
+                The multilingual-E5 variant also yields consistent gains across diverse agent backbones, showing that LRAT is not tied to a single embedding architecture.
+              </p>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Retriever setting</th>
+                  <th>Agent</th>
+                  <th>InfoSeek-Eval SR</th>
+                  <th>BrowseComp-Plus SR</th>
+                  <th>BrowseComp-Plus Recall</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Qwen3-Emb</td>
+                  <td>Tongyi-DeepResearch</td>
+                  <td>52.7 -> <strong>68.0</strong></td>
+                  <td>17.8 -> <strong>23.7</strong></td>
+                  <td>49.2 -> <strong>60.7</strong></td>
+                </tr>
+                <tr>
+                  <td>Qwen3-Emb</td>
+                  <td>MiniMax-M2.1</td>
+                  <td>58.7 -> <strong>78.3</strong></td>
+                  <td>38.2 -> <strong>48.3</strong></td>
+                  <td>57.2 -> <strong>69.2</strong></td>
+                </tr>
+                <tr>
+                  <td>E5-Large</td>
+                  <td>Tongyi-DeepResearch</td>
+                  <td>56.7 -> <strong>68.0</strong></td>
+                  <td>20.7 -> <strong>23.9</strong></td>
+                  <td>54.8 -> <strong>61.8</strong></td>
+                </tr>
+                <tr>
+                  <td>E5-Large</td>
+                  <td>GLM-4.7</td>
+                  <td>73.7 -> <strong>81.7</strong></td>
+                  <td>46.4 -> <strong>50.6</strong></td>
+                  <td>68.7 -> <strong>76.3</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <span class="section-kicker">Abstract</span>
+            <h2>Paper summary</h2>
+          </div>
+          <div class="abstract-card">
+            <p>
+              Information retrieval systems have historically been trained for human users, but
+              modern search is increasingly carried out by large language model agents.
+              LRAT formalizes learning to retrieve from agent trajectories as a new training
+              paradigm, where supervision is mined from multi-step agent interactions rather than
+              human click logs. Through systematic analysis, LRAT identifies browsing actions,
+              unbrowsed rejections, and post-browse reasoning traces as reliable signals of
+              document utility. It then uses these signals to construct high-quality
+              query-document supervision and train dense retrievers with relevance-aware
+              weighting. Experiments on both InfoSeek-Eval and BrowseComp-Plus show consistent
+              improvements in evidence recall, end-to-end task success, and execution efficiency
+              across diverse agents and retriever backbones.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <span class="section-kicker">Citation</span>
+            <h2>Use this placeholder for now</h2>
+          </div>
+          <div class="citation-card">
+<pre><code>@misc{lrat2026,
+  title        = {Learning to Retrieve from Agent Trajectories},
+  author       = {TODO},
+  year         = {2026},
+  howpublished = {Manuscript in preparation},
+  note         = {Project page, checkpoint, dataset, and arXiv link will be released later}
+}</code></pre>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+  </html>
