@@ -42,6 +42,15 @@ body {
   font-size: 1rem;
 }
 
+.author-line a {
+  color: #0b57d0;
+  text-decoration: none;
+}
+
+.author-line a:hover {
+  text-decoration: underline;
+}
+
 .link-row {
   display: flex;
   flex-wrap: wrap;
