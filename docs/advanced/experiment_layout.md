@@ -3,7 +3,7 @@
 This repository becomes much easier to manage once indexes, trajectories, training data, checkpoints, and evaluation outputs follow one predictable directory structure.
 
 <p align="center">
-  <img src="../assets/experiment-layout.svg" width="100%" alt="Recommended experiment layout">
+  <img src="../../assets/experiment-layout.svg" width="100%" alt="Recommended experiment layout">
 </p>
 
 ## Recommended Layout

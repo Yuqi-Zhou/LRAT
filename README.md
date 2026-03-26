@@ -138,7 +138,7 @@ cd ..
 
 ### 2. Build Retrieval Indexes
 
-See [docs/index.md](docs/index.md) for the full indexing notes.
+See [docs/index_construction.md](docs/index_construction.md) for the full indexing notes.
 
 BM25 template:
 
@@ -248,15 +248,22 @@ python scripts_evaluation/evaluate.py \
 
 ## Documentation
 
+### Core Guides
+
 | Topic | Link |
 | --- | --- |
-| Index Construction | [docs/index.md](docs/index.md) |
+| Index Construction | [docs/index_construction.md](docs/index_construction.md) |
 | Trajectory Construction | [docs/trajectory_construction.md](docs/trajectory_construction.md) |
 | Training Data Construction | [docs/training_data_construction.md](docs/training_data_construction.md) |
 | Minimal Reproduction | [docs/minimal_repro.md](docs/minimal_repro.md) |
-| Experiment Layout | [docs/experiment_layout.md](docs/experiment_layout.md) |
-| Segmented Training Data Experiments | [docs/segmented_training_data_experiment.md](docs/segmented_training_data_experiment.md) |
 | Evaluation | [docs/evaluate.md](docs/evaluate.md) |
+
+### Advanced Notes
+
+| Topic | Link |
+| --- | --- |
+| Experiment Layout | [docs/advanced/experiment_layout.md](docs/advanced/experiment_layout.md) |
+| Segmented Training Data Experiments | [docs/advanced/segmented_training_data_experiment.md](docs/advanced/segmented_training_data_experiment.md) |
 
 ## Data and Outputs
 
