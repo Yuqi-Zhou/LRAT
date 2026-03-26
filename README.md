@@ -1,20 +1,32 @@
-<div align="center">
-
 # Learning to Retrieve from Agent Trajectories
-### LRAT
 
-<p>
-  <img src="https://img.shields.io/badge/Benchmarks-BrowseComp--Plus%20%7C%20InfoSeek--Eval-7C3AED?style=for-the-badge" alt="Benchmarks">
+Retrieval is no longer optimized only for human searchers. As large language model agents increasingly issue queries, inspect snippets, browse documents, and reason over retrieved evidence, the target of retrieval training has shifted from human interaction to agent interaction. **LRAT** studies this paradigm shift and learns retrievers directly from multi-step agent trajectories.
+
+<p align="center">
+  <img src="assets/paper-figures/intro_5.png" width="92%" alt="Paradigm shift from human-centric retrieval training to agent-centric retrieval learning">
 </p>
 
-<p>
-  <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-2563EB?style=for-the-badge&logo=githubpages&logoColor=white" alt="Homepage"></a>
-  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat"><img src="https://img.shields.io/badge/Checkpoints-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black" alt="Checkpoints"></a>
-  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-FCD34D?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"></a>
-  <a href="#citation"><img src="https://img.shields.io/badge/Paper-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper"></a>
+<p align="center">
+  <em>Modern retrieval supervision should match how search agents actually search, browse, and consume evidence.</em>
 </p>
 
-</div>
+<p align="center">
+  <a href="https://yuqi-zhou.github.io/LRAT-homepage/">
+    <img src="https://img.shields.io/badge/Homepage-LRAT-2563eb.svg?style=flat&logo=githubpages&logoColor=white" alt="Homepage">
+  </a>
+  <a href="https://github.com/Yuqi-Zhou/LRAT">
+    <img src="https://img.shields.io/badge/GitHub-Code-blue.svg?style=flat&logo=github" alt="GitHub Code">
+  </a>
+  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat">
+    <img src="https://img.shields.io/badge/%F0%9F%A4%97_HuggingFace-Collection-ffbd45.svg?style=flat" alt="Hugging Face Collection">
+  </a>
+  <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train">
+    <img src="https://img.shields.io/badge/%F0%9F%A4%97_HuggingFace-Dataset-ffbd45.svg?style=flat" alt="Hugging Face Dataset">
+  </a>
+  <a href="https://arxiv.org/abs/2602.09892">
+    <img src="https://img.shields.io/badge/Paper-LRAT-d4333f?logo=arxiv&logoColor=white&style=flat" alt="Paper">
+  </a>
+</p>
 
 ## Introduction
 
@@ -26,7 +38,7 @@
 - evaluating both retrieval quality and end-to-end task success.
 
 <p align="center">
-  <img src="assets/paper-figures/method_7_readme.png" alt="LRAT method overview from the paper">
+  <img src="assets/paper-figures/method_7_readme.png" width="92%" alt="LRAT method overview from the paper">
 </p>
 
 ## News
