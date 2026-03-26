@@ -23,9 +23,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
   <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train">
     <img src="https://img.shields.io/badge/%F0%9F%A4%97_HuggingFace-Dataset-ffbd45.svg?style=flat" alt="Hugging Face Dataset">
   </a>
-  <a href="https://arxiv.org/abs/2602.09892">
-    <img src="https://img.shields.io/badge/Paper-LRAT-d4333f?logo=arxiv&logoColor=white&style=flat" alt="Paper">
-  </a>
+  <img src="https://img.shields.io/badge/Paper-Coming%20Soon-9ca3af?logo=arxiv&logoColor=white&style=flat" alt="Paper coming soon">
 </p>
 
 ## Introduction
