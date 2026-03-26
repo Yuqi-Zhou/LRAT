@@ -9,7 +9,7 @@
 
 <p>
   <a href="https://yuqi-zhou.github.io/LRAT-homepage/"><img src="https://img.shields.io/badge/Homepage-2563EB?style=for-the-badge&logo=githubpages&logoColor=white" alt="Homepage"></a>
-  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories"><img src="https://img.shields.io/badge/Checkpoints-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black" alt="Checkpoints"></a>
+  <a href="https://huggingface.co/collections/Yuqi-Zhou/lrat"><img src="https://img.shields.io/badge/Checkpoints-F59E0B?style=for-the-badge&logo=huggingface&logoColor=black" alt="Checkpoints"></a>
   <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train"><img src="https://img.shields.io/badge/Dataset-FCD34D?style=for-the-badge&logo=huggingface&logoColor=black" alt="Dataset"></a>
   <a href="#citation"><img src="https://img.shields.io/badge/Paper-B91C1C?style=for-the-badge&logo=arxiv&logoColor=white" alt="Paper"></a>
 </p>
@@ -31,7 +31,7 @@
 
 ## News
 
-- `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
+- `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
 
 ## Highlights
 
@@ -45,7 +45,7 @@
 | Resource | Status |
 | --- | --- |
 | Homepage | [Homepage](https://yuqi-zhou.github.io/LRAT-homepage/) |
-| Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat-learning-to-retrieve-from-agent-trajectories) |
+| Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat) |
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
 | arXiv Paper | `TODO` |
 
