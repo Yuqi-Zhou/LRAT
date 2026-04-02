@@ -23,7 +23,9 @@ Retrieval is no longer optimized only for human searchers. As large language mod
   <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train">
     <img src="https://img.shields.io/badge/%F0%9F%A4%97_HuggingFace-Dataset-ffbd45.svg?style=flat" alt="Hugging Face Dataset">
   </a>
-  <img src="https://img.shields.io/badge/Paper-Coming%20Soon-9ca3af?logo=arxiv&logoColor=white&style=flat" alt="Paper coming soon">
+  <a href="assets/paper/LRAT.pdf">
+    <img src="https://img.shields.io/badge/Paper-PDF-b31b1b?logo=arxiv&logoColor=white&style=flat" alt="Paper PDF">
+  </a>
 </p>
 
 ## Introduction
@@ -57,7 +59,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 | Homepage | [Homepage](https://yuqi-zhou.github.io/LRAT-homepage/) |
 | Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat) |
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
-| arXiv Paper | `TODO` |
+| Paper PDF | [Learning to Retrieve from Agent Trajectories](assets/paper/LRAT.pdf) |
 
 ## Repository Overview
 
@@ -293,14 +295,12 @@ Vendored components keep their own upstream licenses, especially:
 
 ## Citation
 
-If you find this repository useful, you can use the following placeholder citation for now and update it after the paper is uploaded to arXiv:
+If you find this repository useful, please cite the paper below. The current PDF is also available directly in this repository at [assets/paper/LRAT.pdf](assets/paper/LRAT.pdf).
 
 ```bibtex
-@misc{lrat2026,
-  title        = {Learning to Retrieve from Agent Trajectories},
-  author       = {TODO},
-  year         = {2026},
-  howpublished = {Manuscript in preparation},
-  note         = {Project page, checkpoint, dataset, and arXiv link will be released later}
+@article{zhou2026lrat,
+  title={Learning to Retrieve from Agent Trajectories},
+  author={Zhou, Yuqi and Dai, Sunhao and Qu, Changle and Pang, Liang and Xu, Jun and Wen, Ji-Rong},
+  year={2026}
 }
 ```
