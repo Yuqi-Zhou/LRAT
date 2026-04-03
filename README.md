@@ -43,6 +43,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 
 ## News
 
+- `2026/04/03`: Paper accepted to **SIGIR 2026**.
 - `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
 
 ## Highlights
@@ -59,7 +60,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 | Homepage | [Homepage](https://yuqi-zhou.github.io/LRAT-homepage/) |
 | Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat) |
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
-| Paper PDF | [Learning to Retrieve from Agent Trajectories](assets/paper/LRAT.pdf) |
+| Paper | [PDF](assets/paper/LRAT.pdf) · Accepted by **SIGIR 2026** |
 
 ## Repository Overview
 
@@ -295,12 +296,13 @@ Vendored components keep their own upstream licenses, especially:
 
 ## Citation
 
-If you find this repository useful, please cite the paper below. The current PDF is also available directly in this repository at [assets/paper/LRAT.pdf](assets/paper/LRAT.pdf).
+If you find this repository useful, please cite our **SIGIR 2026** paper below. The current PDF is also available directly in this repository at [assets/paper/LRAT.pdf](assets/paper/LRAT.pdf).
 
 ```bibtex
-@article{zhou2026lrat,
+@inproceedings{zhou2026lrat,
   title={Learning to Retrieve from Agent Trajectories},
   author={Zhou, Yuqi and Dai, Sunhao and Qu, Changle and Pang, Liang and Xu, Jun and Wen, Ji-Rong},
+  booktitle={Proceedings of the 49th International ACM SIGIR Conference on Research and Development in Information Retrieval},
   year={2026}
 }
 ```
