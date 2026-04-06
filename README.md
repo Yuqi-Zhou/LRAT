@@ -7,7 +7,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 </p>
 
 <p align="center">
-  <em>Modern retrieval supervision should match how search agents actually search, browse, and consume evidence.</em>
+  <em>Training data for agent native search should match how search agents actually search, browse, and consume evidence.</em>
 </p>
 
 <p align="center">
