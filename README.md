@@ -281,7 +281,6 @@ python scripts_evaluation/evaluate.py \
 This repository builds on and benefits from several excellent open-source projects and public resources:
 
 - [Alibaba-NLP/DeepResearch](https://github.com/Alibaba-NLP/DeepResearch)
-- [openclaw/openclaw](https://github.com/openclaw/openclaw)
 - [FlagOpen/FlagEmbedding](https://github.com/FlagOpen/FlagEmbedding)
 - [texttron/BrowseComp-Plus](https://github.com/texttron/BrowseComp-Plus)
 - [Tevatron](https://github.com/texttron/tevatron)
