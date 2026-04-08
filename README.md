@@ -23,8 +23,8 @@ Retrieval is no longer optimized only for human searchers. As large language mod
   <a href="https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train">
     <img src="https://img.shields.io/badge/%F0%9F%A4%97_HuggingFace-Dataset-ffbd45.svg?style=flat" alt="Hugging Face Dataset">
   </a>
-  <a href="assets/paper/LRAT.pdf">
-    <img src="https://img.shields.io/badge/Paper-PDF-b31b1b?logo=arxiv&logoColor=white&style=flat" alt="Paper PDF">
+  <a href="https://arxiv.org/abs/2604.04949">
+    <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv&logoColor=white&style=flat" alt="Paper arXiv">
   </a>
 </p>
 
@@ -43,6 +43,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 
 ## News
 
+- `2026/04/08`: Released the paper on [arXiv](https://arxiv.org/abs/2604.04949).
 - `2026/04/03`: Paper accepted to **SIGIR 2026**.
 - `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
 
@@ -60,7 +61,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 | Homepage | [Homepage](https://yuqi-zhou.github.io/LRAT-homepage/) |
 | Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat) |
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
-| Paper | [PDF](assets/paper/LRAT.pdf) · Accepted by **SIGIR 2026** |
+| Paper | [arXiv:2604.04949](https://arxiv.org/abs/2604.04949) · Accepted by **SIGIR 2026** |
 
 ## Repository Overview
 
@@ -296,7 +297,7 @@ Vendored components keep their own upstream licenses, especially:
 
 ## Citation
 
-If you find this repository useful, please cite our **SIGIR 2026** paper below. The current PDF is also available directly in this repository at [assets/paper/LRAT.pdf](assets/paper/LRAT.pdf).
+If you find this repository useful, please cite our **SIGIR 2026** paper below. The latest public version is available on [arXiv](https://arxiv.org/abs/2604.04949).
 
 ```bibtex
 @inproceedings{zhou2026lrat,
