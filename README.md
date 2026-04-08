@@ -1,4 +1,4 @@
-# Learning to Retrieve from Agent Trajectories
+# [SIGIR 2026] Learning to Retrieve from Agent Trajectories
 
 Retrieval is no longer optimized only for human searchers. As large language model agents increasingly issue queries, inspect snippets, browse documents, and reason over retrieved evidence, the target of retrieval training has shifted from human interaction to agent interaction. **LRAT** studies this paradigm shift and learns retrievers directly from multi-step agent trajectories.
 
@@ -61,7 +61,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 | Homepage | [Homepage](https://yuqi-zhou.github.io/LRAT-homepage/) |
 | Model Checkpoint | [LRAT Collection](https://huggingface.co/collections/Yuqi-Zhou/lrat) |
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
-| Paper | [arXiv:2604.04949](https://arxiv.org/abs/2604.04949) · Accepted by **SIGIR 2026** |
+| Paper | [arXiv](https://arxiv.org/abs/2604.04949) · Accepted by **SIGIR 2026** |
 
 ## Repository Overview
 
