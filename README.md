@@ -26,6 +26,9 @@ Retrieval is no longer optimized only for human searchers. As large language mod
   <a href="https://arxiv.org/abs/2604.04949">
     <img src="https://img.shields.io/badge/Paper-arXiv-b31b1b?logo=arxiv&logoColor=white&style=flat" alt="Paper arXiv">
   </a>
+  <a href="https://mp.weixin.qq.com/s/RWfw6CA4kSwTPLV81uDMJQ?scene=1">
+    <img src="https://img.shields.io/badge/中文解读-WeChat_Article-07C160.svg?style=flat" alt="Chinese Blog">
+  </a>
 </p>
 
 ## Introduction
@@ -40,6 +43,12 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 <p align="center">
   <img src="assets/paper-figures/method_7_readme.png" width="92%" alt="LRAT method overview from the paper">
 </p>
+
+## Chinese Blog / 中文解读
+
+For Chinese readers, we provide an unofficial Chinese walkthrough of LRAT covering the motivation, methodology, and experimental findings:
+
+- Chinese Blog / 中文解读：https://mp.weixin.qq.com/s/RWfw6CA4kSwTPLV81uDMJQ?scene=1
 
 ## News
 
