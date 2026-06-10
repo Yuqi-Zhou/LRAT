@@ -72,6 +72,21 @@ For Chinese readers, we provide an unofficial Chinese walkthrough of LRAT coveri
 | Dataset Release | [LRAT-Train](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train) |
 | Paper | [arXiv](https://arxiv.org/abs/2604.04949) · Accepted by **SIGIR 2026** |
 
+## Dataset Statistics
+The released LRAT-Train dataset contains only **completed trajectories with correct final answers**.
+
+| Retriever | # Trajectories | Avg. Search | Avg. Browse | Avg. Steps |
+|-----------|--------------:|------------:|------------:|-----------:|
+| BM25 | 7,674 | 9.15 | 2.96 | 12.11 |
+| Qwen3-Embedding-0.6B | 5,913 | 12.81 | 3.68 | 16.49 |
+| Qwen3-Embedding-4B | 6,354 | 13.24 | 4.11 | 17.34 |
+| Qwen3-Embedding-8B | 6,541 | 11.86 | 3.69 | 15.55 |
+| **Total** | **26,482** | **11.77** | **3.61** | **15.38** |
+
+- **26,482** successful agent trajectories.
+- Collected from both sparse (BM25) and dense (Qwen3-Embedding) retrievers.
+- Each trajectory contains search and browse interactions performed during multi-step information seeking.
+
 ## Repository Overview
 
 | Path | Description |
