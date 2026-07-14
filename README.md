@@ -31,6 +31,13 @@ Retrieval is no longer optimized only for human searchers. As large language mod
   </a>
 </p>
 
+## News
+- `2026/07/01`: Organized a competition at [CCIR CUP](https://www.xir.cn/competition/1170) based on LART. Welcome!
+- `2026/04/08`: Released the full paper on [arXiv](https://arxiv.org/abs/2604.04949).
+- `2026/04/03`: Paper accepted to **SIGIR 2026**.
+- `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
+
+
 ## Introduction
 
 **LRAT** studies how to train retrievers from the intermediate behaviors of strong search agents rather than from only final answers. The repository focuses on a practical pipeline for:
@@ -49,12 +56,6 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 For Chinese readers, we provide an unofficial Chinese walkthrough of LRAT covering the motivation, methodology, and experimental findings:
 
 - Chinese Blog / 中文解读：https://mp.weixin.qq.com/s/RWfw6CA4kSwTPLV81uDMJQ?scene=1
-
-## News
-
-- `2026/04/08`: Released the paper on [arXiv](https://arxiv.org/abs/2604.04949).
-- `2026/04/03`: Paper accepted to **SIGIR 2026**.
-- `2026/03/24`: Open-sourced [model checkpoints](https://huggingface.co/collections/Yuqi-Zhou/lrat) and the [LRAT-Train dataset](https://huggingface.co/datasets/Yuqi-Zhou/LRAT-Train).
 
 ## Highlights
 
