@@ -1,0 +1,18 @@
+{
+  "name": "XIR-B BrowseComp-Plus inference",
+  "competition_url": "https://www.xir.cn/competition/1170/ranking?sch=2660",
+  "query_count": 830,
+  "retriever_count": 6,
+  "trajectories_per_model": 4980,
+  "max_model_calls_per_trajectory": 50,
+  "max_output_tokens_per_call": 4096,
+  "get_document_model_context_tokens": 8192,
+  "default_concurrency": 32,
+  "judge_during_generation": false,
+  "agent_policy": "autonomous tool_choice=auto",
+  "model_profiles": [
+    "deepseek-v4-flash",
+    "gpt-oss-120b",
+    "qwen3.5-122b-a10b-fp8"
+  ]
+}

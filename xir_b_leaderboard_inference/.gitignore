@@ -1,0 +1,5 @@
+configs/campaign.local.json
+runs/
+__pycache__/
+*.py[cod]
+.pytest_cache/
