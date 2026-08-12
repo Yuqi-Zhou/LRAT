@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one isolated, atomically persisted XIR-B BC-Plus trajectory."""
+"""Run one isolated, atomically persisted CCIR-B BC-Plus trajectory."""
 
 from __future__ import annotations
 
@@ -62,7 +62,7 @@ RUN_ID = (
 if not RUN_ID:
     raise RuntimeError("BCP_RUN_ID must be explicit in every live query worker")
 # Keep the historical metadata field populated for trajectory readers that
-# predate the public XIR-B package.
+# predate the public CCIR-B package.
 os.environ.setdefault("BCP_TRIAL_ID", RUN_ID)
 SOURCE = Path(CONFIG["browsecomp_source"])
 QUERY_SOURCE_PATH = Path(CONFIG["query_path"])
@@ -82,7 +82,7 @@ from utils import extract_retrieved_docids_from_result  # noqa: E402
 
 
 EXPECTED_LIMIT = 50
-MAX_STEP_POLICY = "XIR_B_HEALTHY_MAX_STEPS_V1"
+MAX_STEP_POLICY = "CCIR_B_HEALTHY_MAX_STEPS_V1"
 MCP_INIT_GATE_ENV = "BCP_MCP_INIT_GATE"
 MCP_INIT_GATE_TIMEOUT_ENV = "BCP_MCP_INIT_GATE_TIMEOUT_SECONDS"
 MCP_INIT_RAMP_LEVELS = (

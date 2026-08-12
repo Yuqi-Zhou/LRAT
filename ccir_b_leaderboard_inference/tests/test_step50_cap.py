@@ -1,4 +1,4 @@
-"""Regression checks for the XIR-B 50-call upper bound."""
+"""Regression checks for the CCIR-B 50-call upper bound."""
 
 from __future__ import annotations
 

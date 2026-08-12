@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one deterministic shard of the XIR-B BC-Plus campaign.
+"""Run one deterministic shard of the CCIR-B BC-Plus campaign.
 
 Sharding follows the row order in ``queries.tsv`` rather than numeric query
 IDs.  Multiple hosts may use the same output root because every shard owns a

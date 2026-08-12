@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Small status monitor for the XIR A-leaderboard evaluation run."""
+"""Small status monitor for the CCIR A-leaderboard evaluation run."""
 
 from __future__ import annotations
 

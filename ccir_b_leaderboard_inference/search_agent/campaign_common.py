@@ -23,7 +23,7 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 CAMPAIGN_ROOT = Path(
     os.environ.get("BCP_CAMPAIGN_ROOT", str(PACKAGE_ROOT))
 ).resolve()
-# XIR-B treats the exact autonomous-call cap as a valid terminal condition
+# CCIR-B treats the exact autonomous-call cap as a valid terminal condition
 # only when the persisted transcript proves that the cap, rather than an
 # infrastructure or protocol error, ended the trajectory.
 MAX_INTERACTION_STEPS = 50

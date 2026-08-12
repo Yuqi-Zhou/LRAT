@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strictly validate every expected trajectory in an XIR-B run/shard."""
+"""Strictly validate every expected trajectory in a CCIR-B run/shard."""
 
 from __future__ import annotations
 

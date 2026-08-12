@@ -1,6 +1,6 @@
 # Retrieval services
 
-The XIR-B agent uses the repository's existing BrowseComp-Plus-compatible MCP
+The CCIR-B agent uses the repository's existing BrowseComp-Plus-compatible MCP
 server at [`../../searcher/mcp_server.py`](../../searcher/mcp_server.py). Start
 one local service per retriever. Every service must expose both `search` and
 `get_document`, and its port must match `configs/campaign.example.json`.

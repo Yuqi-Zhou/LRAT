@@ -32,7 +32,7 @@ Retrieval is no longer optimized only for human searchers. As large language mod
 </p>
 
 ## News
-- `2026/08/06`: Released the [XIR-B BrowseComp-Plus multi-model inference code](xir_b_leaderboard_inference/README.md), including the 50-call autonomous-agent contract.
+- `2026/08/06`: Released the [CCIR-B BrowseComp-Plus multi-model inference code](ccir_b_leaderboard_inference/README.md), including the 50-call autonomous-agent contract.
 - `2026/07/01`: Organized a competition at [CCIR CUP](https://www.xir.cn/competition/1170/ranking?sch=2660) based on LRAT. Welcome!
 - `2026/04/08`: Released the full paper on [arXiv](https://arxiv.org/abs/2604.04949).
 - `2026/04/03`: Paper accepted to **SIGIR 2026**.
@@ -103,8 +103,8 @@ The released LRAT-Train dataset contains only **completed trajectories with corr
 | `FlagEmbedding/` | Local copy of FlagEmbedding used for retriever training |
 | `tevatron/` | Local copy of Tevatron utilities used in dense retrieval workflows |
 | `scripts_evaluation/` | Evaluation scripts for end-to-end judging |
-| `xir_a_leaderboard_eval/` | XIR A-leaderboard retriever evaluation |
-| `xir_b_leaderboard_inference/` | XIR B-test inference for DeepSeek-V4-Flash, GPT-OSS-120B, and Qwen3.5 over six retrievers |
+| `ccir_a_leaderboard_eval/` | CCIR A-leaderboard retriever evaluation |
+| `ccir_b_leaderboard_inference/` | CCIR B-test inference for DeepSeek-V4-Flash, GPT-OSS-120B, and Qwen3.5 over six retrievers |
 
 ## Vendored Dependencies
 
@@ -278,12 +278,12 @@ python scripts_evaluation/evaluate.py \
   --batch_size 32
 ```
 
-### 7. Reproduce the XIR competition settings
+### 7. Reproduce the CCIR competition settings
 
 The competition-specific code is kept separate from the core LRAT pipeline:
 
-- [A-leaderboard retriever evaluation](xir_a_leaderboard_eval/README.md)
-- [B-test multi-model BrowseComp-Plus inference](xir_b_leaderboard_inference/README.md)
+- [A-leaderboard retriever evaluation](ccir_a_leaderboard_eval/README.md)
+- [B-test multi-model BrowseComp-Plus inference](ccir_b_leaderboard_inference/README.md)
 
 The B-test runner evaluates all six configured retrievers with autonomous
 `search`/`get_document` tool use and an explicit upper bound of **50 model
