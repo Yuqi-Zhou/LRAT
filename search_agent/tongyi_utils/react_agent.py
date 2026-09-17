@@ -116,8 +116,8 @@ class MultiTurnReactAgent(FnCallAgent):
                     model=self.model,
                     messages=msgs,
                     stop=["\n<tool_response>", "<tool_response>"],
-                    temperature=0.6,
-                    top_p=0.95,
+                    temperature=self.llm_generate_cfg.get('temperature', 0.85),
+                    top_p=self.llm_generate_cfg.get('top_p', 0.95),
                     logprobs=True,
                     max_tokens=self.max_generation,
                     seed=2026,
@@ -249,17 +249,19 @@ class MultiTurnReactAgent(FnCallAgent):
                 messages[-1]['content'] = 'Sorry, the number of llm calls exceeds the limit. You have now reached the maximum context length you can handle. You should stop making tool calls and, based on all the information above, think again and provide what you consider the most likely answer in the following format:<think>your final thinking</think>\n<answer>your answer</answer>'
                 self.max_generation = 10000
                 content, finish_reason = self.call_server(messages, planning_port)
-                messages.append({"role": "assistant", "content": content.strip()})
 
-                if 'finish_reason' == "length":
+                if finish_reason == "length":
                     self.enable_thinking = False
                     content, finish_reason = self.call_server(messages, planning_port)
-                
+                    self.enable_thinking = True
+
+                messages.append({"role": "assistant", "content": content.strip()})
+
                 if '<answer>' in content and '</answer>' in content:
-                    prediction = messages[-1]['content'].split('<answer>')[1].split('</answer>')[0]
+                    prediction = content.split('<answer>')[1].split('</answer>')[0]
                     termination = 'generate an answer as token limit reached'
                 else:
-                    prediction = messages[-1]['content']
+                    prediction = content
                     termination = 'format error: generate an answer as token limit reached'
 
                 result = {
